@@ -77,33 +77,108 @@ Scratch.translate.setup({
     const AS_TEXT = "txt";
     const AS_DATA_URL = "dataURL";
     let openFileSelectorMode = MODE_MODAL;
+    const textEncoder = new TextEncoder();
+    const textDecoder = new TextDecoder();
+    const encodeBinary = (bytes) => {
+        const buffer = new Uint8Array(Math.ceil((bytes.length * 8) / 3));
+        let ptr = 0;
+
+        for (var i = 0; i <= bytes.length - 3; i += 3) {
+            const a = bytes[i];
+            const b = bytes[i + 1];
+            const c = bytes[i + 2];
+            buffer[ptr++] = 49 + (a >> 5);
+            buffer[ptr++] = 49 + ((a >> 2) & 0b111);
+            buffer[ptr++] = 49 + (((a & 0b11) << 1) | (b >> 7));
+            buffer[ptr++] = 49 + ((b >> 4) & 0b111);
+            buffer[ptr++] = 49 + ((b >> 1) & 0b111);
+            buffer[ptr++] = 49 + (((b & 0b1) << 2) | (c >> 6));
+            buffer[ptr++] = 49 + ((c >> 3) & 0b111);
+            buffer[ptr++] = 49 + (c & 0b111);
+        }
+
+        switch (bytes.length - i) {
+            case 1: {
+                const a = bytes[i];
+                buffer[ptr++] = 49 + (a >> 5);
+                buffer[ptr++] = 49 + ((a >> 2) & 0b111);
+                buffer[ptr++] = 49 + ((a & 0b11) << 1);
+                break;
+            }
+
+            case 2: {
+                const a = bytes[i];
+                const b = bytes[i + 1];
+                buffer[ptr++] = 49 + (a >> 5);
+                buffer[ptr++] = 49 + ((a >> 2) & 0b111);
+                buffer[ptr++] = 49 + (((a & 0b11) << 1) | (b >> 7));
+                buffer[ptr++] = 49 + ((b >> 4) & 0b111);
+                buffer[ptr++] = 49 + ((b >> 1) & 0b111);
+                buffer[ptr++] = 49 + ((b & 0b1) << 2);
+                break;
+            }
+        }
+
+        return textDecoder.decode(buffer);
+    };
+
+    const decodeBinary = (string) => {
+        const encodedBytes = Math.floor((string.length * 3) / 8);
+        const result = new Uint8Array(encodedBytes);
+        let ptr = 0;
+
+        for (var i = 0; i <= string.length - 8; i += 8) {
+            const a = string.charCodeAt(i) - 49;
+            const b = string.charCodeAt(i + 1) - 49;
+            const c = string.charCodeAt(i + 2) - 49;
+            const d = string.charCodeAt(i + 3) - 49;
+            const e = string.charCodeAt(i + 4) - 49;
+            const f = string.charCodeAt(i + 5) - 49;
+            const g = string.charCodeAt(i + 6) - 49;
+            const h = string.charCodeAt(i + 7) - 49;
+            result[ptr++] = (a << 5) | (b << 2) | (c >> 1);
+            result[ptr++] = ((c & 0b1) << 7) | (d << 4) | (e << 1) | (f >> 2);
+            result[ptr++] = ((f & 0b11) << 6) | (g << 3) | h;
+        }
+
+        switch (encodedBytes - ptr) {
+            case 1: {
+                const a = string.charCodeAt(i) - 49;
+                const b = string.charCodeAt(i + 1) - 49;
+                const c = string.charCodeAt(i + 2) - 49;
+                result[ptr] = (a << 5) | (b << 2) | (c >> 1);
+                break;
+            }
+
+            case 2: {
+                const a = string.charCodeAt(i) - 49;
+                const b = string.charCodeAt(i + 1) - 49;
+                const c = string.charCodeAt(i + 2) - 49;
+                const d = string.charCodeAt(i + 3) - 49;
+                const e = string.charCodeAt(i + 4) - 49;
+                const f = string.charCodeAt(i + 5) - 49;
+                result[ptr++] = (a << 5) | (b << 2) | (c >> 1);
+                result[ptr] = ((c & 0b1) << 7) | (d << 4) | (e << 1) | (f >> 2);
+                break;
+            }
+        }
+
+        return result;
+    };
+
     function encodeText(text, salt) {
-        const s = String(text);
-        const k = (Number(salt) || 0) % 997;
-        let out = '';
-        for (let i = 0; i < s.length; i++) {
-            const cp = s.codePointAt(i);
-            if (cp > 0xffff) i++;
-            const v = (cp + k + i) % 1000;
-            out += String(v).padStart(3, '0');
-        }
-        return out || '000';
+        return encodeBinary(textEncoder.encode(String(text)));
     }
+
     function decodeText(numStr, salt) {
-        const n = String(numStr).replace(/\D/g, '');
-        const k = (Number(salt) || 0) % 997;
-        let out = '';
-        for (let i = 0, j = 0; i < n.length; i += 3, j++) {
-            const chunk = n.slice(i, i + 3);
-            if (chunk.length < 3) break;
-            const v = Number(chunk);
-            if (!Number.isFinite(v)) continue;
-            let cp = v - k - j;
-            while (cp < 0) cp += 1000;
-            const ascii = 32 + (cp % 95);
-            out += String.fromCodePoint(ascii);
+        const text = String(numStr);
+        for (let i = 0; i < text.length; i++) {
+            const ch = text.charCodeAt(i);
+            if (ch < 49 || ch > 56) {
+                return "";
+            }
         }
-        return out;
+        return textDecoder.decode(decodeBinary(text));
     }
     function md5(str) {
         function rotl(n, b) { return (n << b) | (n >>> (32 - b)); }
@@ -263,7 +338,7 @@ Scratch.translate.setup({
             fps = times.length;
         };
     }
-    const greenFlagURI = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAABFFBMVEUAAACAgABVqlVJkklAn0BNmTNLljxGlzpDmzdFmjpGmzxHmz9Fmj1FmT5Emj1GmT1GmD1EmDxGmTxEmT1GmjxGmT1FmDxEmT5EmTxGmT5FmD1GmT5FmT1Gmj1EmT5FmT1FmT1FmDxGmT1FmjxLs09LtE9Jr0xJsk1Js05JtVBKtU5KtVBKtlBJrkpJsE1KtlFIrEpIsExLt1FLuFJKuVNIqkhLulNIp0VJqkhKtlJLvVRMvFNFmT5GpUVFmT1HpEVHokNMvlVFmT1Ho0NFmTxLvlVGoUFMvlVLvlVGn0BFmT1Nv1ZEmz5FmTxFmTxFmT1NvlZFmz9FmT5FnT9FnD5GnT9Mv1ZMv1ZMv1ZFmT1Mv1b////70P2GAAAAWXRSTlMAAgMHCAoRFhcwMz0/RkdQVGFmaWpxcnh7gIGEhZKZo6eprLq/v8DAwMDAwMDBwcHCwsPDxcbIysrLzM3Pz9DQ1NTV1dfZ29vg4uXm5+jp6ens7fDx9Pv8/nPb5aAAAAABYktHRFt0vJU0AAAAsUlEQVQoz2NgwA3YhNiwS4hHykoou9goCrKiSUhGhqhZe7gbm3rxQwQ4BJihEupRYODooMDFyMAu6uMsgyoRFW5kHxjkqeuhL4cmAQM4JXRwSWjjktDEJaGFS0IVIeFtZuIaAZdQgUmY2/oqyTu5WcEkNGAS/kJMQJrbySAAJBxmGSoIlYAoYGCR8rPVM7QItuNlQJVgYGDlE5MU5kSErhz2+KCihEikNHYJJh5mBhIAADBcR/r5OJzCAAAAAElFTkSuQmCC";
+    const greenFlagURI = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M8 8L24 8L24 24L8 16Z' fill='%234CAF50'/%3E%3C/svg%3E";
     const TURBO_MODE = "turbo mode";
     const INTERPOLATION = "interpolation";
     const REMOVE_FENCING = "remove fencing";
@@ -533,8 +608,11 @@ Scratch.translate.setup({
                     { id: 'cyberInputCategory',  color: '#2D82FF' }
                 ],
                 blocks: [
+                    { opcode: 'labelCondition', blockType: B.LABEL, text: 'All in the Collection is ningqi [Collect]!!!', category: '工具集' },
+                    { opcode: 'labelCollection', blockType: B.LABEL, text: 'Under "TW-A" mean is：', category: '工具集' },
+                    { opcode: 'labelCondition', blockType: B.LABEL, text: 'Author in TurboWarp Expansion', category: '工具集' },
 
-                    { opcode: 'labelCondition', blockType: B.LABEL, text: '条件交互', category: '工具集' },
+                    { opcode: 'labelCondition', blockType: B.LABEL, text: '条件交互 × TW-A', category: '工具集' },
                     { opcode: 'whenKeyString', blockType: B.HAT, blockIconURI: NC_ICON, text: '当按下[KEY_OPTION]键', arguments: { KEY_OPTION: { type: A.STRING, defaultValue: 'enter' } }, category: '工具集' },
                     { opcode: 'keyStringPressed', blockType: B.BOOLEAN, blockIconURI: NC_ICON,  text: '按下[KEY_OPTION]键?', arguments: { KEY_OPTION: { type: A.STRING, defaultValue: 'enter' } }, category: '工具集' },
                     { opcode: 'alertBlock', blockType: B.COMMAND,  blockIconURI: NC_ICON, text: '弹出提示[STRING]', arguments: { STRING: { type: A.STRING, defaultValue: '即将加载！' } }, category: '工具集' },
@@ -546,12 +624,12 @@ Scratch.translate.setup({
                     { opcode: 'decrementCountByNum', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '将计数器减少[NUM]', arguments: { NUM: { type: A.NUMBER, defaultValue: 1 } }, category: '工具集' },
                     { opcode: 'setCount', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '将计数器设为[NUM]', arguments: { NUM: { type: A.NUMBER, defaultValue: 0 } }, category: '工具集' },
                     '---',
-                    { opcode: 'labelString', blockType: B.LABEL, text: '字符串处理', category: '工具集' },
+                    { opcode: 'labelString', blockType: B.LABEL, text: '字符串处理 × TW-A', category: '工具集' },
                     { opcode: 'lettersToOf', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '[STRING]的第[INPUTA]到第[INPUTB]个字符', arguments: { INPUTA: { type: A.NUMBER, defaultValue: '1' }, INPUTB: { type: A.NUMBER, defaultValue: '3' }, STRING: { type: A.STRING, defaultValue: '114514' } }, category: '工具集' },
                     { opcode: 'newlineCharacter', blockType: B.REPORTER,  blockIconURI: NC_ICON, text: '换行符', category: '工具集' },
                     { opcode: 'stringIfElse', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '如果[BOOLEAN]则[INPUTA]否则[INPUTB]', arguments: { BOOLEAN: { type: A.BOOLEAN, defaultValue: '' }, INPUTA: { type: A.STRING, defaultValue: '1' }, INPUTB: { type: A.STRING, defaultValue: '0' } }, category: '工具集' },
-                    { opcode: 'encodeText', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '文本转云数字 [TEXT]', arguments: { TEXT: { type: A.STRING, defaultValue: 'Hi' } }, category: '工具集' },
-                    { opcode: 'decodeText', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '云数字转文本 [NUMSTR]', arguments: { NUMSTR: { type: A.STRING, defaultValue: '114514' } }, category: '工具集' },
+                    { opcode: 'encodeText', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '编码[TEXT]为数字', arguments: { TEXT: { type: A.STRING, defaultValue: 'Hi' } }, category: '工具集' },
+                    { opcode: 'decodeText', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '解码[TEXT]为字符串', arguments: { TEXT: { type: A.STRING, defaultValue: '114514' } }, category: '工具集' },
                     { opcode: 'md5Hash', blockType: B.REPORTER,  blockIconURI: NC_ICON, text: 'MD5hash[TEXT]', arguments: { TEXT: { type: A.STRING, defaultValue: 'Hi' } }, category: '工具集' },
                     { opcode: 'color', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '[COLOR]的代码', arguments: { COLOR: { type: A.COLOR, defaultValue: '#29a9ff' } }, category: '工具集' },
                     { opcode: 'brightnessByColor', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '[color]的亮度', arguments: { color: { type: A.COLOR, defaultValue: '#29a9ff' } }, category: '工具集' },
@@ -560,7 +638,7 @@ Scratch.translate.setup({
                     { opcode: 'json_vm_getlist', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '获取列表[list]', arguments: { list: { type: A.STRING, menu: 'get_list' } }, category: '工具集' },
                     { opcode: 'json_vm_setlist', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '将[list]设为[json]', arguments: { list: { type: A.STRING, menu: 'get_list' }, json: { type: A.STRING, defaultValue: '["Hi","hi"]' } }, category: '工具集' },
                     '---',
-                    { opcode: 'labelCloud', blockType: B.LABEL, blockIconURI: NC_ICON,  text: '云服务相关', category: '工具集' },
+                    { opcode: 'labelCloud', blockType: B.LABEL, blockIconURI: NC_ICON,  text: '10000why的云变量V2 × mini', category: '工具集' },
                     { opcode: 'connect', blockType: B.COMMAND, blockIconURI: NC_ICON,  text: '连接云服 [SERVER]', arguments: { SERVER: { type: A.STRING, defaultValue: 'wss://clouddata.turbowarp.org' } }, category: '工具集' },
                     { opcode: 'disconnect', blockType: B.COMMAND,  blockIconURI: NC_ICON, text: '断开云服', category: '工具集' },
                     { opcode: 'status', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '连接状态', category: '工具集' },
@@ -573,7 +651,7 @@ Scratch.translate.setup({
                     { opcode: 'getVar', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '读取 [NAME]', arguments: { NAME: { type: A.STRING, menu: 'varNames' } }, category: '工具集' },
                     { opcode: 'onUpdated', blockType: B.HAT, isEdgeActivated: true, blockIconURI: NC_ICON,  text: '当 [NAME] 更新', arguments: { NAME: { type: A.STRING, menu: 'varNames' } }, category: '工具集' },
                     '---',
-                    { opcode: 'labelAsset', blockType: B.LABEL, blockIconURI: NC_ICON,  text: '资源管理', category: '工具集' },
+                    { opcode: 'labelAsset', blockType: B.LABEL, blockIconURI: NC_ICON,  text: '文件与资源管理 × TW-A', category: '工具集' },
                     { opcode: 'addSprite', blockType: B.COMMAND, blockIconURI: NC_ICON,  text: '从URL [URL] 加载角色', arguments: { URL: { type: A.STRING, defaultValue: '' } }, category: '工具集' },
                     { opcode: 'addCostume', blockType: B.COMMAND, blockIconURI: NC_ICON,  text: '从URL [URL] 加载造型 [NAME]', arguments: { URL: { type: A.STRING, defaultValue: '' }, NAME: { type: A.STRING, defaultValue: '造型1' } }, category: '工具集' },
                     { opcode: 'deleteSprite', blockType: B.COMMAND,  blockIconURI: NC_ICON, text: '删除角色 [TARGET]', arguments: { TARGET: { type: A.STRING, menu: 'targets' } }, category: '工具集' },
@@ -592,18 +670,18 @@ Scratch.translate.setup({
                     { opcode: 'isClone', blockType: B.BOOLEAN, blockIconURI: NC_ICON,  text: '是克隆体?', category: '工具集' },
                     { opcode: 'getfps', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '帧率', arguments: {}, category: '工具集' },
                     '---',
-                    { opcode: 'labelRuntimeOptions', blockType: B.LABEL, text: '运行设置', category: '工具集' },
-                    { opcode: 'getFramerate', blockType: B.REPORTER, text: '帧率限制', category: '工具集' },
-                    { opcode: 'getCloneLimit', blockType: B.REPORTER, text: '克隆限制', category: '工具集' },
-                    { opcode: 'whenChange', blockType: B.EVENT, text: '当[WHAT]改变', isEdgeActivated: false, arguments: { WHAT: { type: A.STRING, menu: 'changeable' } }, category: '工具集' },
-                    { opcode: 'greenFlag', blockType: B.COMMAND, text: '点击绿旗[flag]', arguments: { flag: { type: A.IMAGE, dataURI: greenFlagURI } }, category: '工具集' },
-                    { opcode: 'getDimension', blockType: B.REPORTER, text: '舞台[dimension]', arguments: { dimension: { type: A.STRING, defaultValue: 'width', menu: 'dimension' } }, category: '工具集' },
-                    { opcode: 'getEnabled', blockType: B.BOOLEAN, text: '[thing]是否启用?', arguments: { thing: { type: A.STRING, defaultValue: TURBO_MODE, menu: 'thing' } }, category: '工具集' },
-                    { opcode: 'setFramerate', blockType: B.COMMAND, text: '将帧率限制设为[fps]', arguments: { fps: { type: A.NUMBER, defaultValue: '30' } }, category: '工具集' },
-                    { opcode: 'setCloneLimit', blockType: B.COMMAND, text: '将克隆限制设为[limit]', arguments: { limit: { type: A.NUMBER, defaultValue: '300', menu: 'clones' } }, category: '工具集' },
-                    { opcode: 'setUsername', blockType: B.COMMAND, text: '将用户名设为[username]', arguments: { username: { type: A.STRING, defaultValue: '' } }, category: '工具集' },
-                    { opcode: 'setEnabled', blockType: B.COMMAND, text: '将[thing]设为[enabled]', arguments: { thing: { type: A.STRING, defaultValue: TURBO_MODE, menu: 'thing' }, enabled: { type: A.STRING, defaultValue: 'true', menu: 'enabled' } }, category: '工具集' },
-                    { opcode: 'setDimensions', blockType: B.COMMAND, text: '将舞台尺寸设为宽[width]高[height]', arguments: { width: { type: A.NUMBER, defaultValue: '480' }, height: { type: A.NUMBER, defaultValue: '360' } }, category: '工具集' },
+                    { opcode: 'labelRuntimeOptions', blockType: B.LABEL, text: '运行时选项 × TW-A', category: '工具集' },
+                    { opcode: 'getFramerate', blockType: B.REPORTER,  blockIconURI: NC_ICON,text: '帧率限制', category: '工具集' },
+                    { opcode: 'getCloneLimit', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '克隆限制', category: '工具集' },
+                    { opcode: 'whenChange', blockType: B.EVENT, blockIconURI: NC_ICON, text: '当[WHAT]改变', isEdgeActivated: false, arguments: { WHAT: { type: A.STRING, menu: 'changeable' } }, category: '工具集' },
+                    { opcode: 'greenFlag', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '点击绿旗[flag]', arguments: { flag: { type: A.IMAGE, dataURI: greenFlagURI } }, category: '工具集' },
+                    { opcode: 'getDimension', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '舞台[dimension]', arguments: { dimension: { type: A.STRING, defaultValue: 'width', menu: 'dimension' } }, category: '工具集' },
+                    { opcode: 'getEnabled', blockType: B.BOOLEAN, blockIconURI: NC_ICON, text: '[thing]是否启用?', arguments: { thing: { type: A.STRING, defaultValue: TURBO_MODE, menu: 'thing' } }, category: '工具集' },
+                    { opcode: 'setFramerate', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '将帧率限制设为[fps]', arguments: { fps: { type: A.NUMBER, defaultValue: '30' } }, category: '工具集' },
+                    { opcode: 'setCloneLimit', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '将克隆限制设为[limit]', arguments: { limit: { type: A.NUMBER, defaultValue: '300', menu: 'clones' } }, category: '工具集' },
+                    { opcode: 'setUsername', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '将用户名设为[username]', arguments: { username: { type: A.STRING, defaultValue: '' } }, category: '工具集' },
+                    { opcode: 'setEnabled', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '将[thing]设为[enabled]', arguments: { thing: { type: A.STRING, defaultValue: TURBO_MODE, menu: 'thing' }, enabled: { type: A.STRING, defaultValue: 'true', menu: 'enabled' } }, category: '工具集' },
+                    { opcode: 'setDimensions', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '将舞台尺寸设为宽[width]高[height]', arguments: { width: { type: A.NUMBER, defaultValue: '480' }, height: { type: A.NUMBER, defaultValue: '360' } }, category: '工具集' },
                     '---',
                     '---',
                     { opcode: 'labelInput', blockType: B.LABEL, text: 'Cyberexplorer的输入框 × mini', category: 'cyberInputCategory' },
@@ -944,7 +1022,7 @@ Scratch.translate.setup({
         getVar(args) { return cloudRuntime.getVar(Cast.toString(args.NAME)); }
         onUpdated(args) { return cloudRuntime.pollUpdatedFlag(Cast.toString(args.NAME)); }
         encodeText(args) { return encodeText(Cast.toString(args.TEXT), cloudRuntime.seed); }
-        decodeText(args) { return decodeText(Cast.toString(args.NUMSTR), cloudRuntime.seed); }
+        decodeText(args) { return decodeText(Cast.toString(args.TEXT), cloudRuntime.seed); }
         listVarNamesDyn() { return cloudRuntime.listNames(); }
         md5Hash(args) { return md5(args.TEXT.trim()); }
         showPickerAs(args) { return showFilePrompt("", args.as); }
