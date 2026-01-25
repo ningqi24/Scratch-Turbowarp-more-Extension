@@ -1,3 +1,4 @@
+//ningqiCollect!!
 Scratch.translate.setup({
     "zh-cn": {
         "_create input [id] type [type] x [x] y [y] width [width] height [height] content [text] color [color] prompt [texts] size [size]": "创建或修改[type]文本框并命名为[id]，X[x]Y[y]宽[width]高[height]内容[text]颜色[color]提示[texts]字体大小[size]",
