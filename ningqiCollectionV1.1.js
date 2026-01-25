@@ -51,63 +51,12 @@ Scratch.translate.setup({
         "_textBlock": "文本",
         "_password": "密码"
     },
-    "en": {
-        "_Input": "Cyberexplorer's Input",
-        "_create input [id] type [type] x [x] y [y] width [width] height [height] content [text] color [color] prompt [texts] size [size]": "Create or modify [type] input named [id], X[x]Y[y] width[width] height[height] content[text] color[color] prompt[texts] font size[size]",
-        "_delete input [id]": "Delete input [id]",
-        "_get [type] of input [id]": "Get [type] of input [id]",
-        "_is input [id] focused": "Is input [id] focused",
-        "_focus on input [id]": "Focus on input [id]",
-        "_delete all inputs": "Delete all inputs",
-        "_[resolution] resolution font size [size]": "Font size [size] at [resolution] resolution",
-        "_input count": "Input count",
-        "_input [num] [type]": "Type of input [num]",
-        "_key [type] pressed": "Is key [type] pressed",
-        "_mouse wheel speed": "Mouse wheel speed",
-        "_set [type] of input [id] to [text]": "Set [type] of input [id] to [text]",
-        "_set input [id] to [read]": "Set input [id] to [read]",
-        "_set font weight of input [id] to [text]": "Set font weight of input [id] to [text]",
-        "_set font family of input [id] to [name]": "Set font family of input [id] to [name]",
-        "_set input [id] to [password]": "Set input [id] to password",
-        "_get stage width": "Get stage width",
-        "_get stage height": "Get stage height",
-        "_focal": "Focus",
-        "_keyboard": "Keyboard",
-        "_set text align of input [id] to [ALIGN]": "Set text align of input [id] to [ALIGN]",
-        "_left": "Left",
-        "_center": "Center",
-        "_right": "Right",
-        "_normal": "Normal",
-        "_bold": "Bold",
-        "_thin": "Thin",
-        "_content": "Content",
-        "_color": "Color",
-        "_prompt": "Prompt",
-        "_font size": "Font size",
-        "_x position": "X position",
-        "_y position": "Y position",
-        "_width": "Width",
-        "_height": "Height",
-        "_background": "Background",
-        "_css": "CSS",
-        "_getStageHeight": "Get stage height",
-        "_getStageWidth": "Get stage width",
-        "_setInputAdaptation [type]": "Set input adaptation to [type]",
-        "_scrollTop": "Scroll Top",
-        "_enable": "Enable",
-        "_disable": "Disable",
-        "_single-line": "Single-line",
-        "_multi-line": "Multi-line",
-        "_editable": "Editable",
-        "_uneditable": "Uneditable",
-        "_textBlock": "Text",
-        "_password": "Password"
-    }
+
 });
 (function (Scratch) {
     'use strict';
     if (!(Scratch && Scratch.extensions && Scratch.extensions.register)) {
-        throw new Error('此环境不支持！Scratch3+扩展环境中加载');
+        throw new Error('此环境不支持！请在Scratch3+扩展环境中加载');
     }
     if (!Scratch.extensions.unsandboxed) {
         throw new Error("this extension must be run unsandboxed");
@@ -306,6 +255,21 @@ Scratch.translate.setup({
         const blob = await res.blob();
         await downloadBlob(blob, file);
     };
+    let count = 0;
+    const times = [];
+    let fps = Scratch.vm?.runtime?.frameLoop?.framerate || 30;
+    if (Scratch.vm?.runtime?._step) {
+        const oldStep = Scratch.vm.runtime._step;
+        Scratch.vm.runtime._step = function () {
+            oldStep.call(this);
+            const now = performance.now();
+            while (times.length > 0 && times[0] <= now - 1000) {
+                times.shift();
+            }
+            times.push(now);
+            fps = times.length;
+        };
+    }
     class Cloud {
         constructor() {
             this.server = 'wss://clouddata.turbowarp.org';
@@ -546,206 +510,28 @@ Scratch.translate.setup({
                         text: Scratch.translate("Input"),
                         category: 'cyberInputCategory'
                     },
-                    {
-                        opcode: "setInputAdaptation",
-                        blockType: Scratch.BlockType.COMMAND,
-                        text: Scratch.translate("setInputAdaptation [type]"),
-                        blockIconURI: INPUT_ICON,
-                        arguments: {
-                            type: {
-                                type: Scratch.ArgumentType.STRING,
-                                menu: "adaptationOptions",
-                                defaultValue: "false"
-                            }
-                        },
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        blockType: Scratch.BlockType.COMMAND,
-                        text: Scratch.translate("create input [id] type [type] x [x] y [y] width [width] height [height] content [text] color [color] prompt [texts] size [size]"),
-                        blockIconURI: INPUT_ICON,
-                        arguments: {
-                            id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" },
-                            type: { type: Scratch.ArgumentType.STRING, menu: "inputTypes", defaultValue: "single-line" },
-                            x: { type: Scratch.ArgumentType.NUMBER, defaultValue: 0 },
-                            y: { type: Scratch.ArgumentType.NUMBER, defaultValue: 0 },
-                            width: { type: Scratch.ArgumentType.NUMBER, defaultValue: 100 },
-                            height: { type: Scratch.ArgumentType.NUMBER, defaultValue: 20 },
-                            text: { type: Scratch.ArgumentType.STRING, defaultValue: "hello world!" },
-                            color: { type: Scratch.ArgumentType.COLOR, defaultValue: "#000000" },
-                            texts: { type: Scratch.ArgumentType.STRING, defaultValue: "hello world!" },
-                            size: { type: Scratch.ArgumentType.NUMBER, defaultValue: 16 }
-                        },
-                        opcode: "createInput",
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        opcode: "setInputTextAlign",
-                        blockType: Scratch.BlockType.COMMAND,
-                        text: Scratch.translate("set text align of input [id] to [ALIGN]"),
-                        blockIconURI: INPUT_ICON,
-                        arguments: {
-                            id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" },
-                            ALIGN: { type: Scratch.ArgumentType.STRING, menu: "textAlignOptions", defaultValue: "left" }
-                        },
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        blockType: Scratch.BlockType.COMMAND,
-                        text: Scratch.translate("delete input [id]"),
-                        blockIconURI: INPUT_ICON,
-                        arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" } },
-                        opcode: "deleteInput",
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        blockType: Scratch.BlockType.REPORTER,
-                        text: Scratch.translate("get [type] of input [id]"),
-                        blockIconURI: INPUT_ICON,
-                        arguments: {
-                            id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" },
-                            type: { type: Scratch.ArgumentType.STRING, menu: "inputProperties", defaultValue: "content" }
-                        },
-                        opcode: "getInputProperty",
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        blockType: Scratch.BlockType.BOOLEAN,
-                        text: Scratch.translate("is input [id] focused"),
-                        blockIconURI: INPUT_ICON,
-                        arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" } },
-                        opcode: "isInputFocused",
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        blockType: Scratch.BlockType.COMMAND,
-                        text: Scratch.translate("focus on input [id]"),
-                        blockIconURI: INPUT_ICON,
-                        arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" } },
-                        opcode: "focusOnInput",
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        blockType: Scratch.BlockType.COMMAND,
-                        text: Scratch.translate("delete all inputs"),
-                        blockIconURI: INPUT_ICON,
-                        opcode: "deleteAllInputs",
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        blockType: Scratch.BlockType.REPORTER,
-                        text: Scratch.translate("[resolution] resolution font size [size]"),
-                        blockIconURI: INPUT_ICON,
-                        arguments: {
-                            resolution: { type: Scratch.ArgumentType.NUMBER, defaultValue: 480 },
-                            size: { type: Scratch.ArgumentType.NUMBER, defaultValue: 16 }
-                        },
-                        opcode: "computeFontSize",
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        blockType: Scratch.BlockType.REPORTER,
-                        text: Scratch.translate("input count"),
-                        blockIconURI: INPUT_ICON,
-                        opcode: "inputCount",
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        blockType: Scratch.BlockType.REPORTER,
-                        text: Scratch.translate("input [num] [type]"),
-                        blockIconURI: INPUT_ICON,
-                        arguments: {
-                            num: { type: Scratch.ArgumentType.NUMBER, defaultValue: 1 },
-                            type: { type: Scratch.ArgumentType.STRING, menu: "inputProperties", defaultValue: "content" }
-                        },
-                        opcode: "getNthInputProperty",
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        blockType: Scratch.BlockType.BOOLEAN,
-                        text: Scratch.translate("key [type] pressed"),
-                        blockIconURI: INPUT_ICON,
-                        arguments: { type: { type: Scratch.ArgumentType.STRING, defaultValue: "KeyA" } },
-                        opcode: "isKeyPressed",
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        blockType: Scratch.BlockType.REPORTER,
-                        text: Scratch.translate("mouse wheel speed"),
-                        blockIconURI: INPUT_ICON,
-                        opcode: "getMouseWheelSpeed",
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        blockType: Scratch.BlockType.COMMAND,
-                        text: Scratch.translate("set [type] of input [id] to [text]"),
-                        blockIconURI: INPUT_ICON,
-                        arguments: {
-                            id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" },
-                            type: { type: Scratch.ArgumentType.STRING, menu: "inputProperties", defaultValue: "content" },
-                            text: { type: Scratch.ArgumentType.STRING, defaultValue: "new text" }
-                        },
-                        opcode: "setInputProperty",
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        blockType: Scratch.BlockType.COMMAND,
-                        text: Scratch.translate("set input [id] to [read]"),
-                        blockIconURI: INPUT_ICON,
-                        arguments: {
-                            id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" },
-                            read: { type: Scratch.ArgumentType.STRING, menu: "readOptions", defaultValue: "editable" }
-                        },
-                        opcode: "setInputReadability",
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        blockType: Scratch.BlockType.COMMAND,
-                        text: Scratch.translate("set font weight of input [id] to [text]"),
-                        blockIconURI: INPUT_ICON,
-                        arguments: {
-                            id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" },
-                            text: { type: Scratch.ArgumentType.STRING, menu: "fontWeightOptions", defaultValue: "normal" }
-                        },
-                        opcode: "setFontWeight",
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        blockType: Scratch.BlockType.COMMAND,
-                        text: Scratch.translate("set font family of input [id] to [name]"),
-                        blockIconURI: INPUT_ICON,
-                        arguments: {
-                            id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" },
-                            name: { type: Scratch.ArgumentType.STRING, defaultValue: "Arial" }
-                        },
-                        opcode: "setFontFamily",
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        blockType: Scratch.BlockType.COMMAND,
-                        text: Scratch.translate("set input [id] to [password]"),
-                        blockIconURI: INPUT_ICON,
-                        arguments: {
-                            id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" },
-                            password: { type: Scratch.ArgumentType.STRING, menu: "passwordOptions", defaultValue: "text" }
-                        },
-                        opcode: "setInputPassword",
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        opcode: "getStageHeight",
-                        blockType: Scratch.BlockType.REPORTER,
-                        blockIconURI: INPUT_ICON,
-                        text: Scratch.translate("getStageHeight"),
-                        category: 'cyberInputCategory'
-                    },
-                    {
-                        opcode: "getStageWidth",
-                        blockType: Scratch.BlockType.REPORTER,
-                        blockIconURI: INPUT_ICON,
-                        text: Scratch.translate("getStageWidth"),
-                        category: 'cyberInputCategory'
-                    },
+                    { opcode: "setInputAdaptation",  blockType: Scratch.BlockType.COMMAND,text: Scratch.translate("setInputAdaptation [type]"), blockIconURI: INPUT_ICON,arguments: {  type: {   type: Scratch.ArgumentType.STRING, menu: "adaptationOptions",defaultValue: "false" } },    category: 'cyberInputCategory' },
+                    { blockType: Scratch.BlockType.COMMAND,  text: Scratch.translate("create input [id] type [type] x [x] y [y] width [width] height [height] content [text] color [color] prompt [texts] size [size]"),  blockIconURI: INPUT_ICON, arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" }, type: { type: Scratch.ArgumentType.STRING, menu: "inputTypes", defaultValue: "single-line" }, x: { type: Scratch.ArgumentType.NUMBER, defaultValue: 0 },   y: { type: Scratch.ArgumentType.NUMBER, defaultValue: 0 },width: { type: Scratch.ArgumentType.NUMBER, defaultValue: 100 },
+                            height: { type: Scratch.ArgumentType.NUMBER, defaultValue: 20 },text: { type: Scratch.ArgumentType.STRING, defaultValue: "hello world!" }, color: { type: Scratch.ArgumentType.COLOR, defaultValue: "#000000" }, texts: { type: Scratch.ArgumentType.STRING, defaultValue: "hello world!" }, size: { type: Scratch.ArgumentType.NUMBER, defaultValue: 16 } }, opcode: "createInput",   category: 'cyberInputCategory' },
+                    { opcode: "setInputTextAlign", blockType: Scratch.BlockType.COMMAND,  text: Scratch.translate("set text align of input [id] to [ALIGN]"),  blockIconURI: INPUT_ICON, arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" }, ALIGN: { type: Scratch.ArgumentType.STRING, menu: "textAlignOptions", defaultValue: "left" } },  category: 'cyberInputCategory' },
+                    { blockType: Scratch.BlockType.COMMAND, text: Scratch.translate("delete input [id]"),  blockIconURI: INPUT_ICON,   arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" } }, opcode: "deleteInput", category: 'cyberInputCategory' },
+                    { blockType: Scratch.BlockType.REPORTER, text: Scratch.translate("get [type] of input [id]"), blockIconURI: INPUT_ICON, arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" },type: { type: Scratch.ArgumentType.STRING, menu: "inputProperties", defaultValue: "content" }}, opcode: "getInputProperty", category: 'cyberInputCategory' },
+                    {  blockType: Scratch.BlockType.BOOLEAN,  text: Scratch.translate("is input [id] focused"),blockIconURI: INPUT_ICON,arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" } },  opcode: "isInputFocused",  category: 'cyberInputCategory' },
+                    {  blockType: Scratch.BlockType.COMMAND,  text: Scratch.translate("focus on input [id]"),blockIconURI: INPUT_ICON,   arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" } },  opcode: "focusOnInput",  category: 'cyberInputCategory'  },
+                    {  blockType: Scratch.BlockType.COMMAND, text: Scratch.translate("delete all inputs"), blockIconURI: INPUT_ICON,  opcode: "deleteAllInputs",   category: 'cyberInputCategory'  },
+                    {   blockType: Scratch.BlockType.REPORTER,text: Scratch.translate("[resolution] resolution font size [size]"),  blockIconURI: INPUT_ICON,  arguments: { resolution: { type: Scratch.ArgumentType.NUMBER, defaultValue: 480 }, size: { type: Scratch.ArgumentType.NUMBER, defaultValue: 16 }   }, opcode: "computeFontSize", category: 'cyberInputCategory'  },
+                    {    blockType: Scratch.BlockType.REPORTER, text: Scratch.translate("input count"),blockIconURI: INPUT_ICON, opcode: "inputCount",category: 'cyberInputCategory' },
+                    {blockType: Scratch.BlockType.REPORTER,text: Scratch.translate("input [num] [type]"),  blockIconURI: INPUT_ICON,  arguments: {  num: { type: Scratch.ArgumentType.NUMBER, defaultValue: 1 },  type: { type: Scratch.ArgumentType.STRING, menu: "inputProperties", defaultValue: "content" } }, opcode: "getNthInputProperty",category: 'cyberInputCategory'  },
+                    {  blockType: Scratch.BlockType.BOOLEAN,  text: Scratch.translate("key [type] pressed"),  blockIconURI: INPUT_ICON,  arguments: { type: { type: Scratch.ArgumentType.STRING, defaultValue: "KeyA" } },   opcode: "isKeyPressed",  category: 'cyberInputCategory'  },
+                    { blockType: Scratch.BlockType.REPORTER,  text: Scratch.translate("mouse wheel speed"), blockIconURI: INPUT_ICON, opcode: "getMouseWheelSpeed",  category: 'cyberInputCategory' },
+                    { blockType: Scratch.BlockType.COMMAND,text: Scratch.translate("set [type] of input [id] to [text]"),  blockIconURI: INPUT_ICON,   arguments: {  id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" }, type: { type: Scratch.ArgumentType.STRING, menu: "inputProperties", defaultValue: "content" },    text: { type: Scratch.ArgumentType.STRING, defaultValue: "new text" }   }, opcode: "setInputProperty",  category: 'cyberInputCategory' },
+                    {   blockType: Scratch.BlockType.COMMAND,   text: Scratch.translate("set input [id] to [read]"), blockIconURI: INPUT_ICON,arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" },  read: { type: Scratch.ArgumentType.STRING, menu: "readOptions", defaultValue: "editable" } }, opcode: "setInputReadability", category: 'cyberInputCategory' },
+                    {  blockType: Scratch.BlockType.COMMAND, text: Scratch.translate("set font weight of input [id] to [text]"), blockIconURI: INPUT_ICON,arguments: {   id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" },  text: { type: Scratch.ArgumentType.STRING, menu: "fontWeightOptions", defaultValue: "normal" }  },  opcode: "setFontWeight",  category: 'cyberInputCategory'  },
+                    { blockType: Scratch.BlockType.COMMAND, text: Scratch.translate("set font family of input [id] to [name]"),  blockIconURI: INPUT_ICON,  arguments: {  id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" },   name: { type: Scratch.ArgumentType.STRING, defaultValue: "Arial" }  }, opcode: "setFontFamily",  category: 'cyberInputCategory' },
+                    {  blockType: Scratch.BlockType.COMMAND,  text: Scratch.translate("set input [id] to [password]"),  blockIconURI: INPUT_ICON,  arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" }, password: { type: Scratch.ArgumentType.STRING, menu: "passwordOptions", defaultValue: "text" } },  opcode: "setInputPassword", category: 'cyberInputCategory' },
+                    { opcode: "getStageHeight",  blockType: Scratch.BlockType.REPORTER, blockIconURI: INPUT_ICON, text: Scratch.translate("getStageHeight"), category: 'cyberInputCategory' },
+                    { opcode: "getStageWidth", blockType: Scratch.BlockType.REPORTER, blockIconURI: INPUT_ICON, text: Scratch.translate("getStageWidth"), category: 'cyberInputCategory' },
+                    '---',
                     { opcode: 'labelCondition', blockType: B.LABEL, text: '条件交互', category: '工具集' },
                     { opcode: 'whenKeyString', blockType: B.HAT, blockIconURI: NC_ICON, text: '当按下[KEY_OPTION]键', arguments: { KEY_OPTION: { type: A.STRING, defaultValue: 'enter' } }, category: '工具集' },
                     { opcode: 'keyStringPressed', blockType: B.BOOLEAN, blockIconURI: NC_ICON,  text: '按下[KEY_OPTION]键?', arguments: { KEY_OPTION: { type: A.STRING, defaultValue: 'enter' } }, category: '工具集' },
@@ -753,6 +539,10 @@ Scratch.translate.setup({
                     { opcode: 'confirmationBlock', blockType: B.BOOLEAN, blockIconURI: NC_ICON,  text: '弹出确认框[STRING]', arguments: { STRING: { type: A.STRING, defaultValue: '是否加载？' } }, category: '工具集' },
                     { opcode: 'inputPromptBlock', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '弹出输入框[PROMPT] 默认值 [DEFAULT]', arguments: { PROMPT: { type: A.STRING, defaultValue: '请输入内容' }, DEFAULT: { type: A.STRING, defaultValue: '默认文本' } }, category: '工具集' },
                     { opcode: 'isPackaged', blockType: B.REPORTER,  blockIconURI: NC_ICON, text: '是打包作品？', category: '工具集' },
+                    { opcode: 'returnCount', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '计数器', arguments: {}, category: '工具集' },
+                    { opcode: 'incrementCountByNum', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '将计数器增加[NUM]', arguments: { NUM: { type: A.NUMBER, defaultValue: 1 } }, category: '工具集' },
+                    { opcode: 'decrementCountByNum', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '将计数器减少[NUM]', arguments: { NUM: { type: A.NUMBER, defaultValue: 1 } }, category: '工具集' },
+                    { opcode: 'setCount', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '将计数器设为[NUM]', arguments: { NUM: { type: A.NUMBER, defaultValue: 0 } }, category: '工具集' },
                     '---',
                     { opcode: 'labelString', blockType: B.LABEL, text: '字符串处理', category: '工具集' },
                     { opcode: 'lettersToOf', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '[STRING]的第[INPUTA]到第[INPUTB]个字符', arguments: { INPUTA: { type: A.NUMBER, defaultValue: '1' }, INPUTB: { type: A.NUMBER, defaultValue: '3' }, STRING: { type: A.STRING, defaultValue: '114514' } }, category: '工具集' },
@@ -761,6 +551,12 @@ Scratch.translate.setup({
                     { opcode: 'encodeText', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '文本转云数字 [TEXT]', arguments: { TEXT: { type: A.STRING, defaultValue: 'Hi' } }, category: '工具集' },
                     { opcode: 'decodeText', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '云数字转文本 [NUMSTR]', arguments: { NUMSTR: { type: A.STRING, defaultValue: '114514' } }, category: '工具集' },
                     { opcode: 'md5Hash', blockType: B.REPORTER,  blockIconURI: NC_ICON, text: 'MD5hash[TEXT]', arguments: { TEXT: { type: A.STRING, defaultValue: ' ' } }, category: '工具集' },
+                    { opcode: 'color', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '颜色[COLOR]代码', arguments: { COLOR: { type: A.COLOR, defaultValue: '#ff0000' } }, category: '工具集' },
+                    { opcode: 'brightnessByColor', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '[color]的亮度', arguments: { color: { type: A.STRING, defaultValue: '#ffffff' } }, category: '工具集' },
+                    { opcode: 'repeatTxtTimes', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '重复文字[TEXT][NUM]次', arguments: { TEXT: { type: A.STRING, defaultValue: 'x' }, NUM: { type: A.NUMBER, defaultValue: 2 } }, category: '工具集' },
+                    { opcode: 'jsonParse', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '解析JSON[TEXT]', arguments: { TEXT: { type: A.STRING, defaultValue: '"Hi"' } }, category: '工具集' },
+                    { opcode: 'json_vm_getlist', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '获取原版列表[list]', arguments: { list: { type: A.STRING, menu: 'get_list' } }, category: '工具集' },
+                    { opcode: 'json_vm_setlist', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '将列表[list]设为[json]', arguments: { list: { type: A.STRING, menu: 'get_list' }, json: { type: A.STRING, defaultValue: '["apple","banana"]' } }, category: '工具集' },
                     '---',
                     { opcode: 'labelCloud', blockType: B.LABEL, blockIconURI: NC_ICON,  text: '云服务相关', category: '工具集' },
                     { opcode: 'connect', blockType: B.COMMAND, blockIconURI: NC_ICON,  text: '连接云服 [SERVER]', arguments: { SERVER: { type: A.STRING, defaultValue: 'wss://clouddata.turbowarp.org' } }, category: '工具集' },
@@ -780,6 +576,7 @@ Scratch.translate.setup({
                     { opcode: 'addCostume', blockType: B.COMMAND, blockIconURI: NC_ICON,  text: '从URL [URL] 加载造型 [NAME]', arguments: { URL: { type: A.STRING, defaultValue: '' }, NAME: { type: A.STRING, defaultValue: '造型1' } }, category: '工具集' },
                     { opcode: 'deleteSprite', blockType: B.COMMAND,  blockIconURI: NC_ICON, text: '删除角色 [TARGET]', arguments: { TARGET: { type: A.STRING, menu: 'targets' } }, category: '工具集' },
                     { opcode: 'deleteCostume', blockType: B.COMMAND,  blockIconURI: NC_ICON, text: '删除造型 [COSTUME]', arguments: { COSTUME: { type: A.STRING, defaultValue: '造型1' } }, category: '工具集' },
+                    { opcode: 'deleteImage', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '删除角色[SPRITE]的造型[COSNAME]', arguments: { COSNAME: { type: A.STRING, defaultValue: '造型1' }, SPRITE: { type: A.STRING, defaultValue: '角色1' } }, category: '工具集' },
                     { opcode: 'getAllSprites', blockType: B.REPORTER,  blockIconURI: NC_ICON, text: '所有角色', category: '工具集' },
                     { opcode: 'getAllCostumes', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '所有造型', category: '工具集' },
                     { opcode: 'getAllSounds', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '所有声音', category: '工具集' },
@@ -790,7 +587,8 @@ Scratch.translate.setup({
                     { opcode: 'downloadURL', blockType: B.COMMAND,  blockIconURI: NC_ICON, text: "将 URL [url] 下载为 [file]", arguments: { url: { type: A.STRING, defaultValue: "" }, file: { type: A.STRING, defaultValue: "保存2.txt" } }, category: '工具集' },
                     { opcode: 'setOpenMode', blockType: B.COMMAND,  blockIconURI: NC_ICON, text: "设置打开方式 [mode]", arguments: { mode: { type: A.STRING, defaultValue: MODE_MODAL, menu: "automaticallyOpen" } }, category: '工具集' },
                     { opcode: 'clonesBeingUsed', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '克隆体数量', category: '工具集' },
-                    { opcode: 'isClone', blockType: B.BOOLEAN, blockIconURI: NC_ICON,  text: '是克隆体?', category: '工具集' }
+                    { opcode: 'isClone', blockType: B.BOOLEAN, blockIconURI: NC_ICON,  text: '是克隆体?', category: '工具集' },
+                    { opcode: 'getfps', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '帧率', arguments: {}, category: '工具集' },
                 ],
                 menus: {
                     inputTypes: [
@@ -839,7 +637,8 @@ Scratch.translate.setup({
                         { text: "打开选择器", value: MODE_IMMEDIATELY_SHOW_SELECTOR },
                         { text: "仅显示选择器", value: MODE_ONLY_SELECTOR }
                     ]},
-                    targets: { acceptReporters: true, items: '_getTargets' }
+                    targets: { acceptReporters: true, items: '_getTargets' },
+                    get_list: { acceptReporters: true, items: "getLists" }
                 }
             };
         }
@@ -1304,6 +1103,153 @@ Scratch.translate.setup({
                 type === "image/webp" ||
                 type === "image/gif"
             );
+        }
+        labelTools2() {}
+        color(args) {
+            return args.COLOR;
+        }
+        returnCount(args) {
+            return count;
+        }
+        incrementCountByNum(args) {
+            if (
+                count.toString().indexOf("-") === -1 ||
+                args.NUM.toString().indexOf("-") === -1
+            ) {
+                count += Math.floor(args.NUM);
+            } else {
+                count = 0;
+            }
+        }
+        decrementCountByNum(args) {
+            if ((count - Math.floor(args.NUM)).toString().indexOf("-") === -1) {
+                count -= Math.floor(args.NUM);
+            } else {
+                count = 0;
+            }
+        }
+        setCount(args) {
+            if (
+                count.toString().indexOf("-") === -1 &&
+                args.NUM.toString().indexOf("-") === -1
+            ) {
+                count = Math.floor(args.NUM);
+            } else {
+                count = 0;
+            }
+        }
+        repeatTxtTimes(args) {
+            return Cast.toString(args.TEXT).repeat(Math.floor(args.NUM));
+        }
+        jsonParse(args) {
+            try {
+                const parsed = JSON.parse(args.TEXT);
+                if (
+                    typeof parsed === "string" ||
+                    typeof parsed === "number" ||
+                    typeof parsed === "boolean"
+                ) {
+                    return parsed;
+                }
+                return Cast.toString(parsed);
+            } catch (e) {
+                console.error(e);
+                return Cast.toString((e && e.message) || e);
+            }
+        }
+        getfps() {
+            return fps;
+        }
+        brightnessByColor({ color }) {
+            const { r, g, b } = Scratch.Cast.toRgbColorObject(color);
+            return (r * 299 + g * 587 + b * 114) / 1000;
+        }
+        deleteImage({ SPRITE, COSNAME }) {
+            const target = Scratch.vm.runtime.getSpriteTargetByName(SPRITE);
+            if (!target) return;
+            target.deleteCostume(target.getCostumeIndexByName(COSNAME));
+        }
+        getLists() {
+            const globalLists = Object.values(
+                Scratch.vm.runtime.getTargetForStage().variables
+            ).filter((x) => x.type === "list");
+            const localLists = Scratch.vm.editingTarget
+                ? Object.values(Scratch.vm.editingTarget.variables).filter(
+                    (x) => x.type === "list"
+                )
+                : [];
+            const uniqueLists = [...new Set([...globalLists, ...localLists])];
+            if (uniqueLists.length === 0) {
+                return [
+                    {
+                        text: "请选择一个列表",
+                        value: "select a list",
+                    },
+                ];
+            }
+            return uniqueLists.map((i) => ({
+                text: i.name,
+                value: i.id,
+            }));
+        }
+        lookupList(list, util) {
+            const byId = util.target.lookupVariableById(list);
+            if (byId && byId.type === "list") {
+                return byId;
+            }
+            const byName = util.target.lookupVariableByNameAndType(list, "list");
+            if (byName) {
+                return byName;
+            }
+            return null;
+        }
+        json_valid_return(json) {
+            if (typeof json !== "string") {
+                return json;
+            } else if (
+                (json.slice(0, 1) !== "[" || json.slice(-1) !== "]") &&
+                (json.slice(0, 1) !== "{" || json.slice(-1) !== "}")
+            ) {
+                return json;
+            } else {
+                try {
+                    return JSON.parse(json) ?? "";
+                } catch {
+                    return json;
+                }
+            }
+        }
+        _fixInvalidJSONValues(value) {
+            if (Number.isNaN(value)) return "NaN";
+            if (value === Infinity) return "Infinity";
+            if (value === -Infinity) return "-Infinity";
+            return value ?? "";
+        }
+        json_vm_getlist({ list }, util) {
+            try {
+                const listVariable = this.lookupList(list, util);
+                if (listVariable) {
+                    return JSON.stringify(listVariable.value);
+                }
+            } catch (e) {
+            }
+            return "";
+        }
+        json_vm_setlist({ list, json }, util) {
+            try {
+                const listVariable = this.lookupList(list, util);
+                if (listVariable) {
+                    const array = JSON.parse(json);
+                    if (Array.isArray(array)) {
+                        const safeArray = array.map((i) => {
+                            if (typeof i === "object") return JSON.stringify(i);
+                            return this._fixInvalidJSONValues(this.json_valid_return(i));
+                        });
+                        listVariable.value = safeArray;
+                    }
+                }
+            } catch (e) {
+            }
         }
     }
     Scratch.extensions.register(new ningqiCollectExtension());
