@@ -1,6 +1,5 @@
 Scratch.translate.setup({
     "zh-cn": {
-        "_Input": "Cyberexplorer的输入框",
         "_create input [id] type [type] x [x] y [y] width [width] height [height] content [text] color [color] prompt [texts] size [size]": "创建或修改[type]文本框并命名为[id]，X[x]Y[y]宽[width]高[height]内容[text]颜色[color]提示[texts]字体大小[size]",
         "_delete input [id]": "删除文本框[id]",
         "_get [type] of input [id]": "获得文本框[id]的[type]",
@@ -10,17 +9,12 @@ Scratch.translate.setup({
         "_[resolution] resolution font size [size]": "[resolution]分辨率下高[size]的字体大小",
         "_input count": "文本框的数量",
         "_input [num] [type]": "第 [num] 个输入框的 [type]",
-        "_key [type] pressed": "按键[type]是否按下",
         "_mouse wheel speed": "鼠标滚轮速度",
         "_set [type] of input [id] to [text]": "设置文本框[id]的[type]为[text]",
         "_set input [id] to [read]": "设置文本框[id]为[read]",
         "_set font weight of input [id] to [text]": "设置文本框[id]的字体粗细为[text]",
         "_set font family of input [id] to [name]": "设置文本框[id]字体为字体名[name]",
         "_set input [id] to [password]": "设置文本框[id]为[password]框",
-        "_get stage width": "获取舞台宽度",
-        "_get stage height": "获取舞台高度",
-        "_focal": "焦点",
-        "_keyboard": "键盘",
         "_set text align of input [id] to [ALIGN]": "设置输入框 [id] 的对齐模式为 [ALIGN]",
         "_left": "左对齐",
         "_center": "中对齐",
@@ -38,8 +32,6 @@ Scratch.translate.setup({
         "_height": "高度",
         "_background": "背景色",
         "_css": "CSS",
-        "_getStageHeight": "舞台分辨率高",
-        "_getStageWidth": "舞台分辨率宽",
         "_setInputAdaptation [type]": "设置自适应为 [type]",
         "_scrollTop": "滚动位置",
         "_enable": "启用",
@@ -268,6 +260,41 @@ Scratch.translate.setup({
             }
             times.push(now);
             fps = times.length;
+        };
+    }
+    const greenFlagURI = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAABFFBMVEUAAACAgABVqlVJkklAn0BNmTNLljxGlzpDmzdFmjpGmzxHmz9Fmj1FmT5Emj1GmT1GmD1EmDxGmTxEmT1GmjxGmT1FmDxEmT5EmTxGmT5FmD1GmT5FmT1Gmj1EmT5FmT1FmT1FmDxGmT1FmjxLs09LtE9Jr0xJsk1Js05JtVBKtU5KtVBKtlBJrkpJsE1KtlFIrEpIsExLt1FLuFJKuVNIqkhLulNIp0VJqkhKtlJLvVRMvFNFmT5GpUVFmT1HpEVHokNMvlVFmT1Ho0NFmTxLvlVGoUFMvlVLvlVGn0BFmT1Nv1ZEmz5FmTxFmTxFmT1NvlZFmz9FmT5FnT9FnD5GnT9Mv1ZMv1ZMv1ZFmT1Mv1b////70P2GAAAAWXRSTlMAAgMHCAoRFhcwMz0/RkdQVGFmaWpxcnh7gIGEhZKZo6eprLq/v8DAwMDAwMDBwcHCwsPDxcbIysrLzM3Pz9DQ1NTV1dfZ29vg4uXm5+jp6ens7fDx9Pv8/nPb5aAAAAABYktHRFt0vJU0AAAAsUlEQVQoz2NgwA3YhNiwS4hHykoou9goCrKiSUhGhqhZe7gbm3rxQwQ4BJihEupRYODooMDFyMAu6uMsgyoRFW5kHxjkqeuhL4cmAQM4JXRwSWjjktDEJaGFS0IVIeFtZuIaAZdQgUmY2/oqyTu5WcEkNGAS/kJMQJrbySAAJBxmGSoIlYAoYGCR8rPVM7QItuNlQJVgYGDlE5MU5kSErhz2+KCihEikNHYJJh5mBhIAADBcR/r5OJzCAAAAAElFTkSuQmCC";
+    const TURBO_MODE = "turbo mode";
+    const INTERPOLATION = "interpolation";
+    const REMOVE_FENCING = "remove fencing";
+    const REMOVE_MISC_LIMITS = "remove misc limits";
+    const HIGH_QUALITY_PEN = "high quality pen";
+    const FRAMERATE = "framerate";
+    const CLONE_LIMIT = "clone limit";
+    const STAGE_SIZE = "stage size";
+    const USERNAME = "username";
+    if (Scratch.vm) {
+        const emitChanged = (what) => Scratch.vm.runtime?.startHats?.("runtimeoptions_whenChange", { WHAT: what });
+        const shallowCopy = (obj) => Object.assign({}, obj);
+        let previousRuntimeOptions = shallowCopy(Scratch.vm.runtime.runtimeOptions);
+        Scratch.vm.on("TURBO_MODE_OFF", () => emitChanged(TURBO_MODE));
+        Scratch.vm.on("TURBO_MODE_ON", () => emitChanged(TURBO_MODE));
+        Scratch.vm.on("INTERPOLATION_CHANGED", () => emitChanged(INTERPOLATION));
+        Scratch.vm.on("RUNTIME_OPTIONS_CHANGED", (newOptions) => {
+            if (newOptions.fencing !== previousRuntimeOptions.fencing) emitChanged(REMOVE_FENCING);
+            if (newOptions.miscLimits !== previousRuntimeOptions.miscLimits) emitChanged(REMOVE_MISC_LIMITS);
+            if (newOptions.maxClones !== previousRuntimeOptions.maxClones) emitChanged(CLONE_LIMIT);
+            previousRuntimeOptions = shallowCopy(newOptions);
+        });
+        if (Scratch.vm.renderer) {
+            Scratch.vm.renderer.on("UseHighQualityRenderChanged", () => emitChanged(HIGH_QUALITY_PEN));
+        }
+        Scratch.vm.on("FRAMERATE_CHANGED", () => emitChanged(FRAMERATE));
+        Scratch.vm.on("STAGE_SIZE_CHANGED", () => emitChanged(STAGE_SIZE));
+        const originalPostData = Scratch.vm.runtime.ioDevices.userData.postData;
+        Scratch.vm.runtime.ioDevices.userData.postData = function (data) {
+            const newUsername = data.username !== this._username;
+            originalPostData.call(this, data);
+            if (newUsername) emitChanged(USERNAME);
         };
     }
     class Cloud {
@@ -505,33 +532,7 @@ Scratch.translate.setup({
                     { id: 'cyberInputCategory',  color: '#2D82FF' }
                 ],
                 blocks: [
-                    {
-                        blockType: "label",
-                        text: Scratch.translate("Input"),
-                        category: 'cyberInputCategory'
-                    },
-                    { opcode: "setInputAdaptation",  blockType: Scratch.BlockType.COMMAND,text: Scratch.translate("setInputAdaptation [type]"), blockIconURI: INPUT_ICON,arguments: {  type: {   type: Scratch.ArgumentType.STRING, menu: "adaptationOptions",defaultValue: "false" } },    category: 'cyberInputCategory' },
-                    { blockType: Scratch.BlockType.COMMAND,  text: Scratch.translate("create input [id] type [type] x [x] y [y] width [width] height [height] content [text] color [color] prompt [texts] size [size]"),  blockIconURI: INPUT_ICON, arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" }, type: { type: Scratch.ArgumentType.STRING, menu: "inputTypes", defaultValue: "single-line" }, x: { type: Scratch.ArgumentType.NUMBER, defaultValue: 0 },   y: { type: Scratch.ArgumentType.NUMBER, defaultValue: 0 },width: { type: Scratch.ArgumentType.NUMBER, defaultValue: 100 },
-                            height: { type: Scratch.ArgumentType.NUMBER, defaultValue: 20 },text: { type: Scratch.ArgumentType.STRING, defaultValue: "hello world!" }, color: { type: Scratch.ArgumentType.COLOR, defaultValue: "#000000" }, texts: { type: Scratch.ArgumentType.STRING, defaultValue: "hello world!" }, size: { type: Scratch.ArgumentType.NUMBER, defaultValue: 16 } }, opcode: "createInput",   category: 'cyberInputCategory' },
-                    { opcode: "setInputTextAlign", blockType: Scratch.BlockType.COMMAND,  text: Scratch.translate("set text align of input [id] to [ALIGN]"),  blockIconURI: INPUT_ICON, arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" }, ALIGN: { type: Scratch.ArgumentType.STRING, menu: "textAlignOptions", defaultValue: "left" } },  category: 'cyberInputCategory' },
-                    { blockType: Scratch.BlockType.COMMAND, text: Scratch.translate("delete input [id]"),  blockIconURI: INPUT_ICON,   arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" } }, opcode: "deleteInput", category: 'cyberInputCategory' },
-                    { blockType: Scratch.BlockType.REPORTER, text: Scratch.translate("get [type] of input [id]"), blockIconURI: INPUT_ICON, arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" },type: { type: Scratch.ArgumentType.STRING, menu: "inputProperties", defaultValue: "content" }}, opcode: "getInputProperty", category: 'cyberInputCategory' },
-                    {  blockType: Scratch.BlockType.BOOLEAN,  text: Scratch.translate("is input [id] focused"),blockIconURI: INPUT_ICON,arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" } },  opcode: "isInputFocused",  category: 'cyberInputCategory' },
-                    {  blockType: Scratch.BlockType.COMMAND,  text: Scratch.translate("focus on input [id]"),blockIconURI: INPUT_ICON,   arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" } },  opcode: "focusOnInput",  category: 'cyberInputCategory'  },
-                    {  blockType: Scratch.BlockType.COMMAND, text: Scratch.translate("delete all inputs"), blockIconURI: INPUT_ICON,  opcode: "deleteAllInputs",   category: 'cyberInputCategory'  },
-                    {   blockType: Scratch.BlockType.REPORTER,text: Scratch.translate("[resolution] resolution font size [size]"),  blockIconURI: INPUT_ICON,  arguments: { resolution: { type: Scratch.ArgumentType.NUMBER, defaultValue: 480 }, size: { type: Scratch.ArgumentType.NUMBER, defaultValue: 16 }   }, opcode: "computeFontSize", category: 'cyberInputCategory'  },
-                    {    blockType: Scratch.BlockType.REPORTER, text: Scratch.translate("input count"),blockIconURI: INPUT_ICON, opcode: "inputCount",category: 'cyberInputCategory' },
-                    {blockType: Scratch.BlockType.REPORTER,text: Scratch.translate("input [num] [type]"),  blockIconURI: INPUT_ICON,  arguments: {  num: { type: Scratch.ArgumentType.NUMBER, defaultValue: 1 },  type: { type: Scratch.ArgumentType.STRING, menu: "inputProperties", defaultValue: "content" } }, opcode: "getNthInputProperty",category: 'cyberInputCategory'  },
-                    {  blockType: Scratch.BlockType.BOOLEAN,  text: Scratch.translate("key [type] pressed"),  blockIconURI: INPUT_ICON,  arguments: { type: { type: Scratch.ArgumentType.STRING, defaultValue: "KeyA" } },   opcode: "isKeyPressed",  category: 'cyberInputCategory'  },
-                    { blockType: Scratch.BlockType.REPORTER,  text: Scratch.translate("mouse wheel speed"), blockIconURI: INPUT_ICON, opcode: "getMouseWheelSpeed",  category: 'cyberInputCategory' },
-                    { blockType: Scratch.BlockType.COMMAND,text: Scratch.translate("set [type] of input [id] to [text]"),  blockIconURI: INPUT_ICON,   arguments: {  id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" }, type: { type: Scratch.ArgumentType.STRING, menu: "inputProperties", defaultValue: "content" },    text: { type: Scratch.ArgumentType.STRING, defaultValue: "new text" }   }, opcode: "setInputProperty",  category: 'cyberInputCategory' },
-                    {   blockType: Scratch.BlockType.COMMAND,   text: Scratch.translate("set input [id] to [read]"), blockIconURI: INPUT_ICON,arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" },  read: { type: Scratch.ArgumentType.STRING, menu: "readOptions", defaultValue: "editable" } }, opcode: "setInputReadability", category: 'cyberInputCategory' },
-                    {  blockType: Scratch.BlockType.COMMAND, text: Scratch.translate("set font weight of input [id] to [text]"), blockIconURI: INPUT_ICON,arguments: {   id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" },  text: { type: Scratch.ArgumentType.STRING, menu: "fontWeightOptions", defaultValue: "normal" }  },  opcode: "setFontWeight",  category: 'cyberInputCategory'  },
-                    { blockType: Scratch.BlockType.COMMAND, text: Scratch.translate("set font family of input [id] to [name]"),  blockIconURI: INPUT_ICON,  arguments: {  id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" },   name: { type: Scratch.ArgumentType.STRING, defaultValue: "Arial" }  }, opcode: "setFontFamily",  category: 'cyberInputCategory' },
-                    {  blockType: Scratch.BlockType.COMMAND,  text: Scratch.translate("set input [id] to [password]"),  blockIconURI: INPUT_ICON,  arguments: { id: { type: Scratch.ArgumentType.STRING, defaultValue: "i" }, password: { type: Scratch.ArgumentType.STRING, menu: "passwordOptions", defaultValue: "text" } },  opcode: "setInputPassword", category: 'cyberInputCategory' },
-                    { opcode: "getStageHeight",  blockType: Scratch.BlockType.REPORTER, blockIconURI: INPUT_ICON, text: Scratch.translate("getStageHeight"), category: 'cyberInputCategory' },
-                    { opcode: "getStageWidth", blockType: Scratch.BlockType.REPORTER, blockIconURI: INPUT_ICON, text: Scratch.translate("getStageWidth"), category: 'cyberInputCategory' },
-                    '---',
+
                     { opcode: 'labelCondition', blockType: B.LABEL, text: '条件交互', category: '工具集' },
                     { opcode: 'whenKeyString', blockType: B.HAT, blockIconURI: NC_ICON, text: '当按下[KEY_OPTION]键', arguments: { KEY_OPTION: { type: A.STRING, defaultValue: 'enter' } }, category: '工具集' },
                     { opcode: 'keyStringPressed', blockType: B.BOOLEAN, blockIconURI: NC_ICON,  text: '按下[KEY_OPTION]键?', arguments: { KEY_OPTION: { type: A.STRING, defaultValue: 'enter' } }, category: '工具集' },
@@ -550,20 +551,20 @@ Scratch.translate.setup({
                     { opcode: 'stringIfElse', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '如果[BOOLEAN]则[INPUTA]否则[INPUTB]', arguments: { BOOLEAN: { type: A.BOOLEAN, defaultValue: '' }, INPUTA: { type: A.STRING, defaultValue: '1' }, INPUTB: { type: A.STRING, defaultValue: '0' } }, category: '工具集' },
                     { opcode: 'encodeText', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '文本转云数字 [TEXT]', arguments: { TEXT: { type: A.STRING, defaultValue: 'Hi' } }, category: '工具集' },
                     { opcode: 'decodeText', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '云数字转文本 [NUMSTR]', arguments: { NUMSTR: { type: A.STRING, defaultValue: '114514' } }, category: '工具集' },
-                    { opcode: 'md5Hash', blockType: B.REPORTER,  blockIconURI: NC_ICON, text: 'MD5hash[TEXT]', arguments: { TEXT: { type: A.STRING, defaultValue: ' ' } }, category: '工具集' },
-                    { opcode: 'color', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '颜色[COLOR]代码', arguments: { COLOR: { type: A.COLOR, defaultValue: '#ff0000' } }, category: '工具集' },
-                    { opcode: 'brightnessByColor', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '[color]的亮度', arguments: { color: { type: A.STRING, defaultValue: '#ffffff' } }, category: '工具集' },
-                    { opcode: 'repeatTxtTimes', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '重复文字[TEXT][NUM]次', arguments: { TEXT: { type: A.STRING, defaultValue: 'x' }, NUM: { type: A.NUMBER, defaultValue: 2 } }, category: '工具集' },
+                    { opcode: 'md5Hash', blockType: B.REPORTER,  blockIconURI: NC_ICON, text: 'MD5hash[TEXT]', arguments: { TEXT: { type: A.STRING, defaultValue: 'Hi' } }, category: '工具集' },
+                    { opcode: 'color', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '[COLOR]的代码', arguments: { COLOR: { type: A.COLOR, defaultValue: '#29a9ff' } }, category: '工具集' },
+                    { opcode: 'brightnessByColor', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '[color]的亮度', arguments: { color: { type: A.COLOR, defaultValue: '#29a9ff' } }, category: '工具集' },
+                    { opcode: 'repeatTxtTimes', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '重复文字[TEXT][NUM]次', arguments: { TEXT: { type: A.STRING, defaultValue: 'Hi' }, NUM: { type: A.NUMBER, defaultValue: 2 } }, category: '工具集' },
                     { opcode: 'jsonParse', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '解析JSON[TEXT]', arguments: { TEXT: { type: A.STRING, defaultValue: '"Hi"' } }, category: '工具集' },
-                    { opcode: 'json_vm_getlist', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '获取原版列表[list]', arguments: { list: { type: A.STRING, menu: 'get_list' } }, category: '工具集' },
-                    { opcode: 'json_vm_setlist', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '将列表[list]设为[json]', arguments: { list: { type: A.STRING, menu: 'get_list' }, json: { type: A.STRING, defaultValue: '["apple","banana"]' } }, category: '工具集' },
+                    { opcode: 'json_vm_getlist', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '获取列表[list]', arguments: { list: { type: A.STRING, menu: 'get_list' } }, category: '工具集' },
+                    { opcode: 'json_vm_setlist', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '将[list]设为[json]', arguments: { list: { type: A.STRING, menu: 'get_list' }, json: { type: A.STRING, defaultValue: '["Hi","hi"]' } }, category: '工具集' },
                     '---',
                     { opcode: 'labelCloud', blockType: B.LABEL, blockIconURI: NC_ICON,  text: '云服务相关', category: '工具集' },
                     { opcode: 'connect', blockType: B.COMMAND, blockIconURI: NC_ICON,  text: '连接云服 [SERVER]', arguments: { SERVER: { type: A.STRING, defaultValue: 'wss://clouddata.turbowarp.org' } }, category: '工具集' },
                     { opcode: 'disconnect', blockType: B.COMMAND,  blockIconURI: NC_ICON, text: '断开云服', category: '工具集' },
                     { opcode: 'status', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '连接状态', category: '工具集' },
                     { opcode: 'version', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '协议版本', category: '工具集' },
-                    { opcode: 'getLatency', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '获取 [SERVER] 的ms延迟', arguments: { SERVER: { type: A.STRING, defaultValue: 'wss://clouddata.turbowarp.org' } }, category: '工具集' },
+                    { opcode: 'getLatency', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: ' [SERVER] 的延迟', arguments: { SERVER: { type: A.STRING, defaultValue: 'wss://clouddata.turbowarp.org' } }, category: '工具集' },
                     { opcode: 'createVar', blockType: B.COMMAND, blockIconURI: NC_ICON,  text: '创建云变量 [NAME]', arguments: { NAME: { type: A.STRING, defaultValue: 'SChat' } }, category: '工具集' },
                     { opcode: 'deleteVar', blockType: B.COMMAND, blockIconURI: NC_ICON,  text: '删除云变量 [NAME]', arguments: { NAME: { type: A.STRING, menu: 'varNames' } }, category: '工具集' },
                     { opcode: 'setVar', blockType: B.COMMAND,  blockIconURI: NC_ICON, text: '将 [NAME] 设为 [VAL]', arguments: { NAME: { type: A.STRING, menu: 'varNames' }, VAL: { type: A.STRING, defaultValue: '123' } }, category: '工具集' },
@@ -589,6 +590,39 @@ Scratch.translate.setup({
                     { opcode: 'clonesBeingUsed', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '克隆体数量', category: '工具集' },
                     { opcode: 'isClone', blockType: B.BOOLEAN, blockIconURI: NC_ICON,  text: '是克隆体?', category: '工具集' },
                     { opcode: 'getfps', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '帧率', arguments: {}, category: '工具集' },
+                    '---',
+                    { opcode: 'labelRuntimeOptions', blockType: B.LABEL, text: '运行设置', category: '工具集' },
+                    { opcode: 'getFramerate', blockType: B.REPORTER, text: '帧率限制', category: '工具集' },
+                    { opcode: 'getCloneLimit', blockType: B.REPORTER, text: '克隆限制', category: '工具集' },
+                    { opcode: 'whenChange', blockType: B.EVENT, text: '当[WHAT]改变', isEdgeActivated: false, arguments: { WHAT: { type: A.STRING, menu: 'changeable' } }, category: '工具集' },
+                    { opcode: 'greenFlag', blockType: B.COMMAND, text: '点击绿旗[flag]', arguments: { flag: { type: A.IMAGE, dataURI: greenFlagURI } }, category: '工具集' },
+                    { opcode: 'getDimension', blockType: B.REPORTER, text: '舞台[dimension]', arguments: { dimension: { type: A.STRING, defaultValue: 'width', menu: 'dimension' } }, category: '工具集' },
+                    { opcode: 'getEnabled', blockType: B.BOOLEAN, text: '[thing]是否启用?', arguments: { thing: { type: A.STRING, defaultValue: TURBO_MODE, menu: 'thing' } }, category: '工具集' },
+                    { opcode: 'setFramerate', blockType: B.COMMAND, text: '将帧率限制设为[fps]', arguments: { fps: { type: A.NUMBER, defaultValue: '30' } }, category: '工具集' },
+                    { opcode: 'setCloneLimit', blockType: B.COMMAND, text: '将克隆限制设为[limit]', arguments: { limit: { type: A.NUMBER, defaultValue: '300', menu: 'clones' } }, category: '工具集' },
+                    { opcode: 'setUsername', blockType: B.COMMAND, text: '将用户名设为[username]', arguments: { username: { type: A.STRING, defaultValue: '' } }, category: '工具集' },
+                    { opcode: 'setEnabled', blockType: B.COMMAND, text: '将[thing]设为[enabled]', arguments: { thing: { type: A.STRING, defaultValue: TURBO_MODE, menu: 'thing' }, enabled: { type: A.STRING, defaultValue: 'true', menu: 'enabled' } }, category: '工具集' },
+                    { opcode: 'setDimensions', blockType: B.COMMAND, text: '将舞台尺寸设为宽[width]高[height]', arguments: { width: { type: A.NUMBER, defaultValue: '480' }, height: { type: A.NUMBER, defaultValue: '360' } }, category: '工具集' },
+                    '---',
+                    '---',
+                    { opcode: 'labelInput', blockType: B.LABEL, text: 'Cyberexplorer的输入框 × mini', category: 'cyberInputCategory' },
+                    { opcode: 'setInputAdaptation', blockType: B.COMMAND, text: '设置自适应为[type]', blockIconURI: INPUT_ICON, arguments: { type: { type: A.STRING, menu: 'adaptationOptions', defaultValue: 'false' } }, category: 'cyberInputCategory' },
+                    { opcode: 'createInput', blockType: B.COMMAND, text: '创建或修改[type]文本框并命名为[id]，X[x]Y[y]宽[width]高[height]内容[text]颜色[color]提示[texts]字体大小[size]', blockIconURI: INPUT_ICON, arguments: { id: { type: A.STRING, defaultValue: 'i' }, type: { type: A.STRING, menu: 'inputTypes', defaultValue: 'single-line' }, x: { type: A.NUMBER, defaultValue: 0 }, y: { type: A.NUMBER, defaultValue: 0 }, width: { type: A.NUMBER, defaultValue: 100 }, height: { type: A.NUMBER, defaultValue: 20 }, text: { type: A.STRING, defaultValue: 'hello world!' }, color: { type: A.COLOR, defaultValue: '#000000' }, texts: { type: A.STRING, defaultValue: 'hello world!' }, size: { type: A.NUMBER, defaultValue: 16 } }, category: 'cyberInputCategory' },
+                    { opcode: 'setInputTextAlign', blockType: B.COMMAND, text: '设置文本框[id]的对齐模式为[ALIGN]', blockIconURI: INPUT_ICON, arguments: { id: { type: A.STRING, defaultValue: 'i' }, ALIGN: { type: A.STRING, menu: 'textAlignOptions', defaultValue: 'left' } }, category: 'cyberInputCategory' },
+                    { opcode: 'deleteInput', blockType: B.COMMAND, text: '删除文本框[id]', blockIconURI: INPUT_ICON, arguments: { id: { type: A.STRING, defaultValue: 'i' } }, category: 'cyberInputCategory' },
+                    { opcode: 'getInputProperty', blockType: B.REPORTER, text: '获得文本框[id]的[type]', blockIconURI: INPUT_ICON, arguments: { id: { type: A.STRING, defaultValue: 'i' }, type: { type: A.STRING, menu: 'inputProperties', defaultValue: 'content' } }, category: 'cyberInputCategory' },
+                    { opcode: 'getNthInputProperty', blockType: B.REPORTER, text: '获取第 [num] 个输入框的 [type]', blockIconURI: INPUT_ICON, arguments: { num: { type: A.NUMBER, defaultValue: 1 }, type: { type: A.STRING, menu: 'inputProperties', defaultValue: 'content' } }, category: 'cyberInputCategory' },
+                    { opcode: 'isInputFocused', blockType: B.BOOLEAN, text: '焦点是否在文本框[id]上', blockIconURI: INPUT_ICON, arguments: { id: { type: A.STRING, defaultValue: 'i' } }, category: 'cyberInputCategory' },
+                    { opcode: 'focusOnInput', blockType: B.COMMAND, text: '将焦点聚焦在文本框[id]上', blockIconURI: INPUT_ICON, arguments: { id: { type: A.STRING, defaultValue: 'i' } }, category: 'cyberInputCategory' },
+                    { opcode: 'deleteAllInputs', blockType: B.COMMAND, text: '删除所有文本框', blockIconURI: INPUT_ICON, category: 'cyberInputCategory' },
+                    { opcode: 'inputCount', blockType: B.REPORTER, text: '文本框的数量', blockIconURI: INPUT_ICON, category: 'cyberInputCategory' },
+                    { opcode: 'getMouseWheelSpeed', blockType: B.REPORTER, text: '鼠标滚轮速度', blockIconURI: INPUT_ICON, category: 'cyberInputCategory' },
+                    { opcode: 'computeFontSize', blockType: B.REPORTER, text: '[resolution]分辨率下高[size]的字体大小', blockIconURI: INPUT_ICON, arguments: { resolution: { type: A.NUMBER, defaultValue: 480 }, size: { type: A.NUMBER, defaultValue: 16 } }, category: 'cyberInputCategory' },
+                    { opcode: 'setInputProperty', blockType: B.COMMAND, text: '设置文本框[id]的[type]为[text]', blockIconURI: INPUT_ICON, arguments: { id: { type: A.STRING, defaultValue: 'i' }, type: { type: A.STRING, menu: 'inputProperties', defaultValue: 'content' }, text: { type: A.STRING, defaultValue: 'new text' } }, category: 'cyberInputCategory' },
+                    { opcode: 'setInputReadability', blockType: B.COMMAND, text: '设置文本框[id]为[read]', blockIconURI: INPUT_ICON, arguments: { id: { type: A.STRING, defaultValue: 'i' }, read: { type: A.STRING, menu: 'readOptions', defaultValue: 'editable' } }, category: 'cyberInputCategory' },
+                    { opcode: 'setFontWeight', blockType: B.COMMAND, text: '设置文本框[id]的字体粗细为[text]', blockIconURI: INPUT_ICON, arguments: { id: { type: A.STRING, defaultValue: 'i' }, text: { type: A.STRING, menu: 'fontWeightOptions', defaultValue: 'normal' } }, category: 'cyberInputCategory' },
+                    { opcode: 'setFontFamily', blockType: B.COMMAND, text: '设置文本框[id]字体为字体名[name]', blockIconURI: INPUT_ICON, arguments: { id: { type: A.STRING, defaultValue: 'i' }, name: { type: A.STRING, defaultValue: 'Arial' } }, category: 'cyberInputCategory' },
+                    { opcode: 'setInputPassword', blockType: B.COMMAND, text: '设置文本框[id]为[password]框', blockIconURI: INPUT_ICON, arguments: { id: { type: A.STRING, defaultValue: 'i' }, password: { type: A.STRING, menu: 'passwordOptions', defaultValue: 'text' } }, category: 'cyberInputCategory' },
                 ],
                 menus: {
                     inputTypes: [
@@ -638,7 +672,37 @@ Scratch.translate.setup({
                         { text: "仅显示选择器", value: MODE_ONLY_SELECTOR }
                     ]},
                     targets: { acceptReporters: true, items: '_getTargets' },
-                    get_list: { acceptReporters: true, items: "getLists" }
+                    get_list: { acceptReporters: true, items: "getLists" },
+                    thing: { acceptReporters: true, items: [
+                        { text: "加速模式", value: TURBO_MODE },
+                        { text: "补帧", value: INTERPOLATION },
+                        { text: "允许角色移出舞台", value: REMOVE_FENCING },
+                        { text: "取消音效范围与画笔大小限制", value: REMOVE_MISC_LIMITS },
+                        { text: "高清画笔", value: HIGH_QUALITY_PEN }
+                    ]},
+                    changeable: { acceptReporters: false, items: [
+                        { text: "加速模式", value: TURBO_MODE },
+                        { text: "补帧", value: INTERPOLATION },
+                        { text: "允许角色移出舞台", value: REMOVE_FENCING },
+                        { text: "取消音效范围与画笔大小限制", value: REMOVE_MISC_LIMITS },
+                        { text: "高清画笔", value: HIGH_QUALITY_PEN },
+                        { text: "帧率", value: FRAMERATE },
+                        { text: "克隆限制", value: CLONE_LIMIT },
+                        { text: "舞台尺寸", value: STAGE_SIZE },
+                        { text: "用户名", value: USERNAME }
+                    ]},
+                    enabled: { acceptReporters: true, items: [
+                        { text: "启用", value: "true" },
+                        { text: "禁用", value: "false" }
+                    ]},
+                    clones: { acceptReporters: true, items: [
+                        { text: "默认 (300)", value: "300" },
+                        { text: "无限", value: "Infinity" }
+                    ]},
+                    dimension: { acceptReporters: true, items: [
+                        { text: "宽度", value: "width" },
+                        { text: "高度", value: "height" }
+                    ]}
                 }
             };
         }
@@ -1250,6 +1314,84 @@ Scratch.translate.setup({
                 }
             } catch (e) {
             }
+        }
+        labelRuntimeOptions() {}
+        getEnabled({ thing }) {
+            if (!Scratch.vm) return false;
+            if (thing === TURBO_MODE) {
+                return Scratch.vm.runtime.turboMode;
+            } else if (thing === INTERPOLATION) {
+                return Scratch.vm.runtime.interpolationEnabled;
+            } else if (thing === REMOVE_FENCING) {
+                return !Scratch.vm.runtime.runtimeOptions.fencing;
+            } else if (thing === REMOVE_MISC_LIMITS) {
+                return !Scratch.vm.runtime.runtimeOptions.miscLimits;
+            } else if (thing === HIGH_QUALITY_PEN && Scratch.vm.renderer) {
+                return Scratch.vm.renderer.useHighQualityRender;
+            }
+            return false;
+        }
+        setEnabled({ thing, enabled }) {
+            if (!Scratch.vm) return;
+            enabled = Cast.toBoolean(enabled);
+            if (thing === TURBO_MODE) {
+                Scratch.vm.setTurboMode(enabled);
+            } else if (thing === INTERPOLATION) {
+                Scratch.vm.setInterpolation(enabled);
+            } else if (thing === REMOVE_FENCING) {
+                Scratch.vm.setRuntimeOptions({
+                    fencing: !enabled,
+                });
+            } else if (thing === REMOVE_MISC_LIMITS) {
+                Scratch.vm.setRuntimeOptions({
+                    miscLimits: !enabled,
+                });
+            } else if (thing === HIGH_QUALITY_PEN && Scratch.vm.renderer) {
+                Scratch.vm.renderer.setUseHighQualityRender(enabled);
+            }
+        }
+        getFramerate() {
+            return Scratch.vm?.runtime?.frameLoop?.framerate || 30;
+        }
+        setFramerate({ fps }) {
+            if (!Scratch.vm) return;
+            fps = Cast.toNumber(fps);
+            Scratch.vm.setFramerate(fps);
+        }
+        getCloneLimit() {
+            return Scratch.vm?.runtime?.runtimeOptions?.maxClones || 300;
+        }
+        setCloneLimit({ limit }) {
+            if (!Scratch.vm) return;
+            limit = Cast.toNumber(limit);
+            Scratch.vm.setRuntimeOptions({
+                maxClones: limit,
+            });
+        }
+        getDimension({ dimension }) {
+            if (!Scratch.vm) return 0;
+            if (dimension === "width") {
+                return Scratch.vm.runtime.stageWidth;
+            } else if (dimension === "height") {
+                return Scratch.vm.runtime.stageHeight;
+            }
+            return 0;
+        }
+        setDimensions({ width, height }) {
+            if (!Scratch.vm) return;
+            width = Cast.toNumber(width);
+            height = Cast.toNumber(height);
+            Scratch.vm.setStageSize(width, height);
+        }
+        setUsername({ username }) {
+            if (!Scratch.vm) return;
+            Scratch.vm.postIOData("userData", {
+                username: Cast.toString(username),
+            });
+        }
+        greenFlag() {
+            if (!Scratch.vm) return;
+            Scratch.vm.runtime.greenFlag();
         }
     }
     Scratch.extensions.register(new ningqiCollectExtension());
