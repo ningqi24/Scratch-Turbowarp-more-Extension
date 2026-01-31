@@ -593,6 +593,11 @@ Scratch.translate.setup({
             this.adaptive = false;
             this.observer = null;
             this._addevent();
+            if (this.scratchRuntime) {
+                this.scratchRuntime.on("BEFORE_EXECUTE", () => {
+                    this.scratchRuntime.startHats("ningqiCollect_whileTrueFalse");
+                });
+            }
         }
         getInfo() {
             const icon = makeIconURI();
@@ -623,6 +628,13 @@ Scratch.translate.setup({
                     { opcode: 'incrementCountByNum', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '将计数器增加[NUM]', arguments: { NUM: { type: A.NUMBER, defaultValue: 1 } }, category: '工具集' },
                     { opcode: 'decrementCountByNum', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '将计数器减少[NUM]', arguments: { NUM: { type: A.NUMBER, defaultValue: 1 } }, category: '工具集' },
                     { opcode: 'setCount', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '将计数器设为[NUM]', arguments: { NUM: { type: A.NUMBER, defaultValue: 0 } }, category: '工具集' },
+                    { opcode: 'stringNotEqual', blockType: B.BOOLEAN, blockIconURI: NC_ICON, text: '[TEXT1]≠[TEXT2]', arguments: { TEXT1: { type: A.STRING, defaultValue: 'hi' }, TEXT2: { type: A.STRING, defaultValue: 'hi2' } }, category: '工具集' },
+                    { opcode: 'whenTrueFalse', blockType: B.HAT, blockIconURI: NC_ICON, text: '当 [CONDITION] 变为 [STATE] ', isEdgeActivated: true, arguments: { CONDITION: { type: A.BOOLEAN }, STATE: { type: A.STRING, menu: 'boolean' } }, category: '工具集' },
+                    { opcode: 'whileTrueFalse', blockType: B.HAT, blockIconURI: NC_ICON, text: '只要 [CONDITION] 为 [STATE]', isEdgeActivated: false, arguments: { CONDITION: { type: A.BOOLEAN }, STATE: { type: A.STRING, menu: 'boolean' } }, category: '工具集' },
+                    { opcode: 'broadcastData', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '广播 [BROADCAST_OPTION] 并携带数据 [DATA]', arguments: { BROADCAST_OPTION: { type: null }, DATA: { type: A.STRING, defaultValue: '' } }, hideFromPalette: true, category: '工具集' },
+                    { opcode: 'broadcastDataAndWait', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '广播 [BROADCAST_OPTION] 并携带数据 [DATA] 并等待', arguments: { BROADCAST_OPTION: { type: null }, DATA: { type: A.STRING, defaultValue: '' } }, hideFromPalette: true, category: '工具集' },
+                    { blockType: B.XML, xml: '<block type="ningqiCollect_broadcastData"><value name="BROADCAST_OPTION"><shadow type="event_broadcast_menu"></shadow></value><value name="DATA"><shadow type="text"></shadow></value></block><block type="ningqiCollect_broadcastDataAndWait"><value name="BROADCAST_OPTION"><shadow type="event_broadcast_menu"></shadow></value><value name="DATA"><shadow type="text"></shadow></value></block>', category: '工具集' },
+                    { opcode: 'receivedData', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '收到的数据', disableMonitor: true, allowDropAnywhere: true, category: '工具集' },
                     '---',
                     { opcode: 'labelString', blockType: B.LABEL, text: '字符串处理 × TW-A', category: '工具集' },
                     { opcode: 'lettersToOf', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '[STRING]的第[INPUTA]到第[INPUTB]个字符', arguments: { INPUTA: { type: A.NUMBER, defaultValue: '1' }, INPUTB: { type: A.NUMBER, defaultValue: '3' }, STRING: { type: A.STRING, defaultValue: '114514' } }, category: '工具集' },
@@ -743,6 +755,11 @@ Scratch.translate.setup({
                         { text: Scratch.translate("enable"), value: "true" },
                         { text: Scratch.translate("disable"), value: "false" }
                     ],
+                    boolean: { acceptReporters: false, items: [
+                        { text: Scratch.translate("true"), value: "true" },
+                        { text: Scratch.translate("false"), value: "false" }
+                    ]},
+
                     varNames: { acceptReporters: true, items: 'listVarNamesDyn' },
                     encoding: { acceptReporters: true, items: [{ text: "txt", value: AS_TEXT }, { text: "dataURL", value: AS_DATA_URL }] },
                     automaticallyOpen: { acceptReporters: true, items: [
@@ -1023,6 +1040,65 @@ Scratch.translate.setup({
         onUpdated(args) { return cloudRuntime.pollUpdatedFlag(Cast.toString(args.NAME)); }
         encodeText(args) { return encodeText(Cast.toString(args.TEXT), cloudRuntime.seed); }
         decodeText(args) { return decodeText(Cast.toString(args.TEXT), cloudRuntime.seed); }
+        stringNotEqual(args) { return Cast.toString(args.TEXT1) !== Cast.toString(args.TEXT2); }
+        whenTrueFalse(args) { return args.STATE === "true" ? args.CONDITION : !args.CONDITION; }
+        whileTrueFalse(args) { return args.STATE === "true" ? args.CONDITION : !args.CONDITION; }
+        broadcastData(args, util) {
+            const broadcast = Scratch.Cast.toString(args.BROADCAST_OPTION);
+            if (!broadcast) return;
+
+            const data = Scratch.Cast.toString(args.DATA);
+
+            let threads = util.startHats("event_whenbroadcastreceived", {
+                BROADCAST_OPTION: broadcast,
+            });
+            threads.forEach((thread) => (thread.receivedData = data));
+        }
+        broadcastDataAndWait(args, util) {
+            const data = Scratch.Cast.toString(args.DATA);
+
+            if (!util.stackFrame.broadcastVar) {
+                util.stackFrame.broadcastVar = Scratch.Cast.toString(args.BROADCAST_OPTION);
+            }
+
+            if (util.stackFrame.broadcastVar) {
+                const broadcastOption = util.stackFrame.broadcastVar;
+                if (!util.stackFrame.startedThreads) {
+                    util.stackFrame.startedThreads = util.startHats(
+                        "event_whenbroadcastreceived",
+                        {
+                            BROADCAST_OPTION: broadcastOption,
+                        }
+                    );
+                    if (util.stackFrame.startedThreads.length === 0) {
+                        return;
+                    } else {
+                        util.stackFrame.startedThreads.forEach(
+                            (thread) => (thread.receivedData = data)
+                        );
+                    }
+                }
+
+                const waiting = util.stackFrame.startedThreads.some(
+                    (thread) => this.scratchRuntime.threads.indexOf(thread) !== -1
+                );
+                if (waiting) {
+                    if (
+                        util.stackFrame.startedThreads.every((thread) =>
+                            this.scratchRuntime.isWaitingThread(thread)
+                        )
+                    ) {
+                        util.yieldTick();
+                    } else {
+                        util.yield();
+                    }
+                }
+            }
+        }
+        receivedData(args, util) {
+            const received = util.thread.receivedData;
+            return received ? received : "";
+        }
         listVarNamesDyn() { return cloudRuntime.listNames(); }
         md5Hash(args) { return md5(args.TEXT.trim()); }
         showPickerAs(args) { return showFilePrompt("", args.as); }
