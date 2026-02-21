@@ -1,94 +1,11 @@
+// Name: ningqiCollection 1.4mini
+// ID: ningqiCollect
+// Description: Maybe this a collection?
+// By: ningqi <https://github.com/ningqi24>
+// License: Creative Commons Zero v1.0 Universal
+
 //ningqiCollect!!
-Scratch.translate.setup({
-    "zh-cn": {
-        "_create input [id] type [type] x [x] y [y] width [width] height [height] content [text] color [color] prompt [texts] size [size]": "创建或修改[type]文本框并命名为[id]，X[x]Y[y]宽[width]高[height]内容[text]颜色[color]提示[texts]字体大小[size]",
-        "_delete input [id]": "删除文本框[id]",
-        "_get [type] of input [id]": "获得文本框[id]的[type]",
-        "_is input [id] focused": "焦点是否在文本框[id]上",
-        "_focus on input [id]": "将焦点聚焦在文本框[id]上",
-        "_delete all inputs": "删除所有文本框",
-        "_[resolution] resolution font size [size]": "[resolution]分辨率下高[size]的字体大小",
-        "_input count": "文本框的数量",
-        "_input [num] [type]": "第 [num] 个输入框的 [type]",
-        "_mouse wheel speed": "鼠标滚轮速度",
-        "_set [type] of input [id] to [text]": "设置文本框[id]的[type]为[text]",
-        "_set input [id] to [read]": "设置文本框[id]为[read]",
-        "_set font weight of input [id] to [text]": "设置文本框[id]的字体粗细为[text]",
-        "_set font family of input [id] to [name]": "设置文本框[id]字体为字体名[name]",
-        "_set input [id] to [password]": "设置文本框[id]为[password]框",
-        "_set text align of input [id] to [ALIGN]": "设置输入框 [id] 的对齐模式为 [ALIGN]",
-        "_left": "左对齐",
-        "_center": "中对齐",
-        "_right": "右对齐",
-        "_normal": "常规",
-        "_bold": "粗体",
-        "_thin": "细体",
-        "_content": "内容",
-        "_color": "颜色",
-        "_prompt": "提示",
-        "_font size": "字体大小",
-        "_x position": "X坐标",
-        "_y position": "y坐标",
-        "_width": "宽度",
-        "_height": "高度",
-        "_background": "背景色",
-        "_css": "CSS",
-        "_setInputAdaptation [type]": "设置自适应为 [type]",
-        "_scrollTop": "滚动位置",
-        "_enable": "启用",
-        "_disable": "禁用",
-        "_single-line": "单行",
-        "_multi-line": "多行",
-        "_editable": "可编辑",
-        "_uneditable": "不可编辑",
-        "_textBlock": "文本",
-        "_password": "密码",
-        "_split [text] by [delimiter]": "将文本[text]按[delimiter]分割",
-        "_replace [text] from [old] to [new]": "将文本[text]中的[old]替换为[new]",
-        "_find [text] in [searchText]": "在文本[searchText]中查找[text]",
-        "_remove spaces from [text]": "移除文本[text]中的空格",
-        "_to uppercase [text]": "将文本[text]转为大写",
-        "_to lowercase [text]": "将文本[text]转为小写",
-        "_character count of [text]": "文本[text]的字符数",
-        "_reverse [text]": "反转文本[text]",
-        "_deduplicate [list]": "对列表[list]去重",
-        "_sort [list]": "对列表[list]排序",
-        "_random from [list]": "从列表[list]中随机选择",
-        "_find position of [item] in [list]": "在列表[list]中查找[item]的位置",
-        "_merge [list1] and [list2]": "合并列表[list1]和[list2]",
-        "_slice [list] from [start] to [end]": "从列表[list]中截取从[start]到[end]的部分",
-        "_copy [text] to clipboard": "复制文本[text]到剪贴板",
-        "_read from local txt": "从本地读取.txt文件",
-        "_get milliseconds": "获取当前毫秒数",
-        "_countdown from [seconds]": "从[seconds]秒开始倒计时",
-        "_get timezone": "获取当前时区",
-        "_get screen width": "获取屏幕宽度",
-        "_get screen height": "获取屏幕高度",
-        "_get volume level": "获取音量级别",
-        "_vibrate for [milliseconds]": "震动[milliseconds]毫秒",
-        "_copy [text] to clipboard": "复制文本[text]到剪贴板",
-        "_read from clipboard": "从剪贴板读取文本",
-        "_open link [url]": "打开链接[url]",
-        "_convert [text] to [case]": "将文本[text]转换为[case]",
-        "_is [text] [case]": "文本[text]是否为[case]",
-        "_unicode of [char]": "字符[char]的Unicode编码",
-        "_character from unicode [code]": "Unicode编码[code]对应的字符",
-        "_count [char] in [text]": "文本[text]中[char]的数量",
-        "_starts with [prefix]": "以[prefix]开头",
-        "_ends with [suffix]": "以[suffix]结尾",
-        "_lowercase": "小写",
-        "_uppercase": "大写",
-        "_sentence case": "句首大写",
-        "_title case": "标题",
-        "_exact title case": "精确标题",
-        "_mixed case": "混合大小写",
-        "_random case": "随机大小写",
-        "_camel case": "驼峰命名",
 
-
-    },
-
-});
 (function (Scratch) {
     'use strict';
     if (!(Scratch && Scratch.extensions && Scratch.extensions.register)) {
@@ -124,9 +41,6 @@ Scratch.translate.setup({
     const textDecoder = new TextDecoder();
     let countdownInterval = null;
     let countdownValue = 0;
-
-    // Simple pinyin dictionary for common characters
-
 
     const encodeBinary = (bytes) => {
         const buffer = new Uint8Array(Math.ceil((bytes.length * 8) / 3));
@@ -646,7 +560,7 @@ Scratch.translate.setup({
             const icon = makeIconURI();
             return {
                 id: 'ningqiCollect',
-                name: 'ningqiCollection',
+                name: 'ningqiCollection 1.4mini',
                 color1: '#42A5F5',
                 color2: '#2196F3',
                 color3: '#1976D2',
@@ -689,7 +603,7 @@ Scratch.translate.setup({
                     { opcode: 'vibrate', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '震动[milliseconds]毫秒', arguments: { milliseconds: { type: A.NUMBER, defaultValue: 500 } }, category: '工具集' },
                     { opcode: 'copyToClipboardSystem', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '复制文本[text]到剪贴板', arguments: { text: { type: A.STRING, defaultValue: 'Hello Scratch!' } }, category: '工具集' },
                     { opcode: 'readFromClipboard', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '从剪贴板读取文本', arguments: {}, category: '工具集' },
-                    { opcode: 'openLink', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '打开链接[url]', arguments: { url: { type: A.STRING, defaultValue: 'https://scratch.mit.edu' } }, category: '工具集' },
+                    { opcode: 'openLink', blockType: B.COMMAND, blockIconURI: NC_ICON, text: '打开浏览器网址:[url]', arguments: { url: { type: A.STRING, defaultValue: '' } }, category: '工具集' },
                     '---',
                     { opcode: 'labelString', blockType: B.LABEL, text: '字符串处理 × TW-A', category: '工具集' },
                     { opcode: 'lettersToOf', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '[STRING]的第[INPUTA]到第[INPUTB]个字符', arguments: { INPUTA: { type: A.NUMBER, defaultValue: '1' }, INPUTB: { type: A.NUMBER, defaultValue: '3' }, STRING: { type: A.STRING, defaultValue: '114514' } }, category: '工具集' },
@@ -761,6 +675,9 @@ Scratch.translate.setup({
                     { opcode: 'clonesBeingUsed', blockType: B.REPORTER, blockIconURI: NC_ICON,  text: '克隆体数量', category: '工具集' },
                     { opcode: 'isClone', blockType: B.BOOLEAN, blockIconURI: NC_ICON,  text: '是克隆体?', category: '工具集' },
                     { opcode: 'getfps', blockType: B.REPORTER, blockIconURI: NC_ICON, text: '帧率', arguments: {}, category: '工具集' },
+                    '---',
+                    { opcode: 'labelCondition', blockType: B.LABEL, text: 'Full version for new ningqiCollection:', category: '工具集' },
+                    { opcode: 'openCollection', blockType: B.COMMAND, blockIconURI: NC_ICON, text: 'OpenURL[url]', arguments: { url: { type: A.STRING, defaultValue: 'https://github.com/ningqi24/Scratch-Turbowarp-more-Extension' } }, category: '工具集' },
 
 
                 ],
@@ -1144,6 +1061,19 @@ Scratch.translate.setup({
             }
         }
 
+         openCollection(args) {
+            const url = Cast.toString(args.url);
+            try {
+                const parsedUrl = new URL(url);
+                const allowedProtocols = ['http:', 'https:'];
+                if (allowedProtocols.includes(parsedUrl.protocol)) {
+                    window.open(url, '_blank');
+                }
+            } catch (err) {
+                console.error('Invalid URL: ', err);
+            }
+        }
+
 
 
         async getLatency(args) {
@@ -1414,13 +1344,6 @@ Scratch.translate.setup({
             return (r * 299 + g * 587 + b * 114) / 1000;
         }
 
-        /**
-         * 将文本转换为指定的大小写形式
-         * @param {Object} args - 参数对象
-         * @param {string} args.text - 要转换的文本
-         * @param {string} args.case - 目标大小写形式
-         * @returns {string} 转换后的文本
-         */
         convertToCase(args) {
             const text = Cast.toString(args.text);
             const caseType = Cast.toString(args.case);
@@ -1461,13 +1384,6 @@ Scratch.translate.setup({
             }
         }
 
-        /**
-         * 判断文本是否为指定的大小写形式
-         * @param {Object} args - 参数对象
-         * @param {string} args.text - 要判断的文本
-         * @param {string} args.case - 目标大小写形式
-         * @returns {boolean} 是否匹配指定的大小写形式
-         */
         isCase(args) {
             const text = Cast.toString(args.text);
             const caseType = Cast.toString(args.case);
@@ -1498,36 +1414,17 @@ Scratch.translate.setup({
             }
         }
 
-        /**
-         * 获取字符的Unicode编码
-         * @param {Object} args - 参数对象
-         * @param {string} args.char - 要获取编码的字符
-         * @returns {string} 字符的Unicode编码
-         */
         unicodeOf(args) {
             const char = Cast.toString(args.char);
             if (!char) return '0';
             return char.charCodeAt(0).toString();
         }
 
-        /**
-         * 根据Unicode编码获取对应的字符
-         * @param {Object} args - 参数对象
-         * @param {number} args.code - Unicode编码
-         * @returns {string} 对应的字符
-         */
         characterFromUnicode(args) {
             const code = Cast.toNumber(args.code);
             return String.fromCharCode(code);
         }
 
-        /**
-         * 统计文本中指定字符的数量
-         * @param {Object} args - 参数对象
-         * @param {string} args.text - 要统计的文本
-         * @param {string} args.char - 要统计的字符
-         * @returns {string} 字符在文本中的数量
-         */
         countCharacters(args) {
             const text = Cast.toString(args.text);
             const char = Cast.toString(args.char);
@@ -1544,26 +1441,12 @@ Scratch.translate.setup({
             return count.toString();
         }
 
-        /**
-         * 判断文本是否以指定前缀开头
-         * @param {Object} args - 参数对象
-         * @param {string} args.text - 要判断的文本
-         * @param {string} args.prefix - 要判断的前缀
-         * @returns {boolean} 是否以指定前缀开头
-         */
         startsWith(args) {
             const text = Cast.toString(args.text);
             const prefix = Cast.toString(args.prefix);
             return text.startsWith(prefix);
         }
 
-        /**
-         * 判断文本是否以指定后缀结尾
-         * @param {Object} args - 参数对象
-         * @param {string} args.text - 要判断的文本
-         * @param {string} args.suffix - 要判断的后缀
-         * @returns {boolean} 是否以指定后缀结尾
-         */
         endsWith(args) {
             const text = Cast.toString(args.text);
             const suffix = Cast.toString(args.suffix);
