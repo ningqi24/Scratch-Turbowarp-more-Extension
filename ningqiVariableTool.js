@@ -4,6 +4,111 @@
 // By: ningqi <https://github.com/ningqi24>
 // License: CC-BY-4.0
 
+Scratch.translate.setup({
+    "zh-cn": {
+        "_ningqiVariableTool": "ningqiVariableTool",
+        "_global": "全局",
+        "_private": "私有",
+        "_listVariables": "列出原版变量",
+        "_listLists": "列出原版列表",
+        "_listInternalVariables": "列出扩展内部变量",
+        "_listInternalLists": "列出扩展内部列表",
+        "_createVariable": "创建变量 [NAME]",
+        "_createList": "创建列表 [NAME]",
+        "_setVariable": "将 [VARIABLE] 设为 [VALUE]",
+        "_changeVariable": "将 [VARIABLE] 增加 [VALUE]",
+        "_getVariable": "[VARIABLE] 的值",
+        "_deleteVariable": "删除变量 [NAME]",
+        "_isVariableExists": "变量 [NAME] 存在",
+        "_appendToList": "将 [ITEM] 加入 [LIST]",
+        "_deleteListItem": "删除 [LIST] 的第 [INDEX] 项",
+        "_deleteAllListItems": "删除 [LIST] 的全部项目",
+        "_insertListItem": "在 [LIST] 的第 [INDEX] 项前插入 [ITEM]",
+        "_replaceListItem": "将 [LIST] 的第 [INDEX] 项替换为 [ITEM]",
+        "_getListItem": "[LIST] 的第 [INDEX] 项",
+        "_indexOfListItem": "[LIST] 中第一个 [ITEM] 的编号",
+        "_listLength": "[LIST] 的项目数",
+        "_listContains": "[LIST] 包含 [ITEM]",
+        "_copyList": "复制列表 [SOURCE_LIST] 的数据到列表 [TARGET_LIST]",
+        "_getList": "列表 [LIST] 的值",
+        "_deleteList": "删除列表 [NAME]",
+        "_isListExists": "列表 [NAME] 存在",
+        "_setVariablePrivacy": "设置变量 [NAME] 为 [PRIVACY]",
+        "_setListPrivacy": "设置列表 [NAME] 为 [PRIVACY]",
+        "_addRoleAccess": "允许角色 [ROLE] 访问 [NAME]",
+        "_removeRoleAccess": "禁止角色 [ROLE] 访问 [NAME]",
+        "_hasRoleAccess": "角色 [ROLE] 可访问 [NAME]"
+    },
+    "en": {
+        "_ningqiVariableTool": "ningqiVariableTool",
+        "_global": "global",
+        "_private": "private",
+        "_listVariables": "list original variables",
+        "_listLists": "list original lists",
+        "_listInternalVariables": "list internal variables",
+        "_listInternalLists": "list internal lists",
+        "_createVariable": "create variable [NAME]",
+        "_createList": "create list [NAME]",
+        "_setVariable": "set [VARIABLE] to [VALUE]",
+        "_changeVariable": "change [VARIABLE] by [VALUE]",
+        "_getVariable": "value of [VARIABLE]",
+        "_deleteVariable": "delete variable [NAME]",
+        "_isVariableExists": "variable [NAME] exists",
+        "_appendToList": "append [ITEM] to [LIST]",
+        "_deleteListItem": "delete item [INDEX] of [LIST]",
+        "_deleteAllListItems": "delete all items of [LIST]",
+        "_insertListItem": "insert [ITEM] at [INDEX] of [LIST]",
+        "_replaceListItem": "replace item [INDEX] of [LIST] with [ITEM]",
+        "_getListItem": "item [INDEX] of [LIST]",
+        "_indexOfListItem": "index of [ITEM] in [LIST]",
+        "_listLength": "length of [LIST]",
+        "_listContains": "[LIST] contains [ITEM]",
+        "_copyList": "copy [SOURCE_LIST] to [TARGET_LIST]",
+        "_getList": "value of list [LIST]",
+        "_deleteList": "delete list [NAME]",
+        "_isListExists": "list [NAME] exists",
+        "_setVariablePrivacy": "set variable [NAME] to [PRIVACY]",
+        "_setListPrivacy": "set list [NAME] to [PRIVACY]",
+        "_addRoleAccess": "allow role [ROLE] to access [NAME]",
+        "_removeRoleAccess": "forbid role [ROLE] to access [NAME]",
+        "_hasRoleAccess": "role [ROLE] can access [NAME]"
+    },
+    "zh-tw": {
+        "_ningqiVariableTool": "ningqiVariableTool",
+        "_global": "全域",
+        "_private": "私有",
+        "_listVariables": "列出原版變數",
+        "_listLists": "列出原版列表",
+        "_listInternalVariables": "列出擴展內部變數",
+        "_listInternalLists": "列出擴展內部列表",
+        "_createVariable": "建立變數 [NAME]",
+        "_createList": "建立列表 [NAME]",
+        "_setVariable": "將 [VARIABLE] 設為 [VALUE]",
+        "_changeVariable": "將 [VARIABLE] 增加 [VALUE]",
+        "_getVariable": "[VARIABLE] 的值",
+        "_deleteVariable": "刪除變數 [NAME]",
+        "_isVariableExists": "變數 [NAME] 存在",
+        "_appendToList": "將 [ITEM] 加入 [LIST]",
+        "_deleteListItem": "刪除 [LIST] 的第 [INDEX] 項",
+        "_deleteAllListItems": "刪除 [LIST] 的全部項目",
+        "_insertListItem": "在 [LIST] 的第 [INDEX] 項前插入 [ITEM]",
+        "_replaceListItem": "將 [LIST] 的第 [INDEX] 項替換為 [ITEM]",
+        "_getListItem": "[LIST] 的第 [INDEX] 項",
+        "_indexOfListItem": "[LIST] 中第一個 [ITEM] 的編號",
+        "_listLength": "[LIST] 的項目數",
+        "_listContains": "[LIST] 包含 [ITEM]",
+        "_copyList": "複製列表 [SOURCE_LIST] 的資料到列表 [TARGET_LIST]",
+        "_getList": "列表 [LIST] 的值",
+        "_deleteList": "刪除列表 [NAME]",
+        "_isListExists": "列表 [NAME] 存在",
+        "_setVariablePrivacy": "設置變數 [NAME] 為 [PRIVACY]",
+        "_setListPrivacy": "設置列表 [NAME] 為 [PRIVACY]",
+        "_addRoleAccess": "允許角色 [ROLE] 訪問 [NAME]",
+        "_removeRoleAccess": "禁止角色 [ROLE] 訪問 [NAME]",
+        "_hasRoleAccess": "角色 [ROLE] 可訪問 [NAME]"
+    }
+});
+
 (function(Scratch) {
     'use strict';
 
@@ -15,8 +120,7 @@
     const B = Scratch.BlockType;
     const Cast = Scratch.Cast;
 
-    const EXTENSION_ICON = 'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSIzOS41NTk3NyIgaGVpZ2h0PSIzOC45NjM0MyIgdmlld0JveD0iMCwwLDM5LjU1OTc3LDM4Ljk2MzQzIj48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjIwLjIyMDEyLC0xNjAuNTE4MjgpIj48ZyBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiPjxwYXRoIGQ9Ik0yMjAuMjIwMTIsMTc3LjEwNzAxYzAsLTkuMTYxNzggNy40MjY5NSwtMTYuNTg4NzMgMTYuNTg4NzMsLTE2LjU4ODczYzkuMTYxNzgsMCAxNi41ODg3Myw3LjQyNjk1IDE2LjU4ODczLDE2LjU4ODczYzAsOS4xNjE3OCAtNy40MjY5NSwxNi41ODg3MyAtMTYuNTg4NzMsMTYuNTg4NzNjLTkuMTYxNzgsMCAtMTYuNTg4NzMsLTcuNDI2OTUgLTE2LjU4ODczLC0xNi41ODg3M3oiIGZpbGwtb3BhY2l0eT0iMC41ODAzOSIgZmlsbD0iIzAwOTlmZiIgZmlsbC1ydWxlPSJldmVub2RkIiBzdHJva2U9Im5vbmUiLz48cGF0aCBkPSJNMjM1LjA2ODIxLDE4Mi41NjYyNmMwLC02LjgzMTE4IDUuNTMxNzcsLTEyLjM2OTAyIDEyLjM1NTgzLC0xMi4zNjkwMmM2LjgyNDA2LDAgMTIuMzU1ODMsNS41Mzc4NCAxMi4zNTU4MywxMi4zNjkwMmMwLDYuODMxMTggLTUuNTMxNzcsMTIuMzY5MDIgLTEyLjM1NTgzLDEyLjM2OTAyYy02LjgyNDA2LDAgLTEyLjM1NTgzLC01LjUzNzg0IC0xMi4zNTU4MywtMTIuMzY5MDJ6IiBmaWxsLW9wYWNpdHk9IjAuNTgwMzkiIGZpbGw9IiMwMDk5ZmYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSJub25lIi8+PHBhdGggZD0iTTIzMC44OTM4NywxODMuMjk1NDhjNC40NjA3NiwwLjQwMTY2IDcuNzUwODEsNC4zNDM0IDcuMzQ5MTUsOC44MDM4OWMtMC40MDE2Niw0LjQ2MDUgLTQuMzQzNCw3Ljc1MDgxIC04LjgwNDE2LDcuMzQ5MTVjLTQuNDYwNDIsLTAuNDAxOTMgLTcuNzUwNzEsLTQuMzQzNjYgLTcuMzQ4OTQsLTguODA0MTZjMC40MDE4LC00LjQ2MDUgNC4zNDM0NSwtNy43NTA4MSA4LjgwMzk1LC03LjM0ODg5eiIgZmlsbC1vcGFjaXR5PSIwLjU4MDM5IiBmaWxsPSIjMDA5OWZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZT0ibm9uZSIvPjx0ZXh0IHRyYW5zZm9ybT0idHJhbnNsYXRlKDIyNS41MTAwNywxODUuODkwMDkpIHNjYWxlKDAuNDEwNzEsMC40MTA3MSkiIGZvbnQtc2l6ZT0iNDAiIHhtbDpzcGFjZT0icHJlc2VydmUiIGZpbGw9IiNmZmZmZmYiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSIjZmZmZmZmIiBmb250LWZhbWlseT0iSGFuZHdyaXRpbmciIGZvbnQtd2VpZ2h0PSJub3JtYWwiIHRleHQtYW5jaG9yPSJzdGFydCI+PHRzcGFuIHg9IjAiIGR5PSIwIj5OdlQ8L3RzcGFuPjwvdGV4dD48L2c+PC9nPjwvc3ZnPjwhLS1yb3RhdGlvbkNlbnRlcjoxOS43Nzk4ODM4NzE0OTEyODoxOS40ODE3MTUwMTI3Mjg5LS0+';
-    const VL_ICON = 'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSIzMC4yOTM5NiIgaGVpZ2h0PSIyMi4xNzgzNCIgdmlld0JveD0iMCwwLDMwLjI5Mzk2LDIyLjE3ODM0Ij48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjI1LjMwNDcxLC0xNzAuNDg4NDcpIj48ZyBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgZm9udC1mYW1pbHk9IkhhbmR3cml0aW5nIiBmb250LXNpemU9IjQwIj48dGV4dCB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMjUuNTEwMDcsMTg1Ljg5MDA5KSBzY2FsZSgwLjQxMDcxLDAuNDEwNzEpIiBmb250LXNpemU9IjQwIiB4bWw6c3BhY2U9InByZXNlcnZlIiBmaWxsPSIjZmZmZmZmIj48dHNwYW4geD0iMCIgZHk9IjAiPk52VDwvdHNwYW4+PC90ZXh0PjwvZz48L2c+PC9zdmc+PCEtLXJvdGF0aW9uQ2VudGVyOjE0LjY5NTI4ODg3MTQ5MTI3Mjo5LjUxMTUzMDAxMjcyODkxMi0tPg==';
+    const EXTENSION_ICON = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgdmVyc2lvbj0iMS4xIgogICB3aWR0aD0iMTUuNjk1NjE4IgogICBoZWlnaHQ9IjE1LjE2OTkyMiIKICAgdmlld0JveD0iMCAwIDE1LjY5NTYxNyAxNS4xNjk5MjIiCiAgIGlkPSJzdmc5IgogICBzb2RpcG9kaTpkb2NuYW1lPSJuaW5ncWlWYXJpYWJsZS5zdmciCiAgIHhtbDpzcGFjZT0icHJlc2VydmUiCiAgIGlua3NjYXBlOnZlcnNpb249IjEuNC4yIChmNDMyN2Y0LCAyMDI1LTA1LTEzKSIKICAgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiCiAgIHhtbG5zOnNvZGlwb2RpPSJodHRwOi8vc29kaXBvZGkuc291cmNlZm9yZ2UubmV0L0RURC9zb2RpcG9kaS0wLmR0ZCIKICAgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgeG1sbnM6c3ZnPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHNvZGlwb2RpOm5hbWVkdmlldwogICAgIGlkPSJuYW1lZHZpZXc5IgogICAgIHBhZ2Vjb2xvcj0iIzUwNTA1MCIKICAgICBib3JkZXJjb2xvcj0iI2ZmZmZmZiIKICAgICBib3JkZXJvcGFjaXR5PSIxIgogICAgIGlua3NjYXBlOnNob3dwYWdlc2hhZG93PSIwIgogICAgIGlua3NjYXBlOnBhZ2VvcGFjaXR5PSIwIgogICAgIGlua3NjYXBlOnBhZ2VjaGVja2VyYm9hcmQ9IjEiCiAgICAgaW5rc2NhcGU6ZGVza2NvbG9yPSIjNTA1MDUwIgogICAgIGlua3NjYXBlOnpvb209IjMuMzMiCiAgICAgaW5rc2NhcGU6Y3g9IjU1Mi40MDI0IgogICAgIGlua3NjYXBlOmN5PSIyNjYuNTE2NTIiCiAgICAgaW5rc2NhcGU6d2luZG93LXdpZHRoPSIxMzY2IgogICAgIGlua3NjYXBlOndpbmRvdy1oZWlnaHQ9IjcwNSIKICAgICBpbmtzY2FwZTp3aW5kb3cteD0iLTgiCiAgICAgaW5rc2NhcGU6d2luZG93LXk9Ii04IgogICAgIGlua3NjYXBlOndpbmRvdy1tYXhpbWl6ZWQ9IjEiCiAgICAgaW5rc2NhcGU6Y3VycmVudC1sYXllcj0ic3ZnOSI+PGlua3NjYXBlOnBhZ2UKICAgICAgIHg9Ii00LjU2Nzg3ODNlLTE0IgogICAgICAgeT0iMCIKICAgICAgIHdpZHRoPSIxNS42OTU2MTciCiAgICAgICBoZWlnaHQ9IjE1LjE2OTkyMiIKICAgICAgIGlkPSJwYWdlMiIKICAgICAgIG1hcmdpbj0iMCIKICAgICAgIGJsZWVkPSIwIiAvPjwvc29kaXBvZGk6bmFtZWR2aWV3PjxkZWZzCiAgICAgaWQ9ImRlZnMyIj48bGluZWFyR3JhZGllbnQKICAgICAgIGlkPSJsaW5lYXJHcmFkaWVudDUwIgogICAgICAgaW5rc2NhcGU6Y29sbGVjdD0iYWx3YXlzIj48c3RvcAogICAgICAgICBzdHlsZT0ic3RvcC1jb2xvcjojMTg5N2YwO3N0b3Atb3BhY2l0eTowLjk0OTAxOTYxOyIKICAgICAgICAgb2Zmc2V0PSIwIgogICAgICAgICBpZD0ic3RvcDUwIiAvPjxzdG9wCiAgICAgICAgIHN0eWxlPSJzdG9wLWNvbG9yOiMxOGFjZjA7c3RvcC1vcGFjaXR5OjAuOTQ5MDE5NjE7IgogICAgICAgICBvZmZzZXQ9IjEiCiAgICAgICAgIGlkPSJzdG9wNTEiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQKICAgICAgIGlkPSJsaW5lYXJHcmFkaWVudDQ4IgogICAgICAgaW5rc2NhcGU6Y29sbGVjdD0iYWx3YXlzIj48c3RvcAogICAgICAgICBzdHlsZT0ic3RvcC1jb2xvcjojMTg5OGYwO3N0b3Atb3BhY2l0eTowLjk0OTAxOTYxOyIKICAgICAgICAgb2Zmc2V0PSIwIgogICAgICAgICBpZD0ic3RvcDQ4IiAvPjxzdG9wCiAgICAgICAgIHN0eWxlPSJzdG9wLWNvbG9yOiMxN2FiZWY7c3RvcC1vcGFjaXR5OjAuOTQ5MDE5NjE7IgogICAgICAgICBvZmZzZXQ9IjEiCiAgICAgICAgIGlkPSJzdG9wNDkiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQKICAgICAgIGlkPSJsaW5lYXJHcmFkaWVudDQ2IgogICAgICAgaW5rc2NhcGU6Y29sbGVjdD0iYWx3YXlzIj48c3RvcAogICAgICAgICBzdHlsZT0ic3RvcC1jb2xvcjojMTg5OGYwO3N0b3Atb3BhY2l0eTowLjk0OTAxOTYxOyIKICAgICAgICAgb2Zmc2V0PSIwIgogICAgICAgICBpZD0ic3RvcDQ2IiAvPjxzdG9wCiAgICAgICAgIHN0eWxlPSJzdG9wLWNvbG9yOiMxN2FiZWY7c3RvcC1vcGFjaXR5OjAuNzMwMjYzMTc7IgogICAgICAgICBvZmZzZXQ9IjEiCiAgICAgICAgIGlkPSJzdG9wNDciIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQKICAgICAgIGlkPSJsaW5lYXJHcmFkaWVudDQ0IgogICAgICAgaW5rc2NhcGU6Y29sbGVjdD0iYWx3YXlzIj48c3RvcAogICAgICAgICBzdHlsZT0ic3RvcC1jb2xvcjojMTg5N2YwO3N0b3Atb3BhY2l0eTowLjk0OTAxOTYxOyIKICAgICAgICAgb2Zmc2V0PSIwIgogICAgICAgICBpZD0ic3RvcDQ0IiAvPjxzdG9wCiAgICAgICAgIHN0eWxlPSJzdG9wLWNvbG9yOiMxOGFjZjA7c3RvcC1vcGFjaXR5OjAuOTQ5MDE5NjE7IgogICAgICAgICBvZmZzZXQ9IjEiCiAgICAgICAgIGlkPSJzdG9wNDUiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQKICAgICAgIGlua3NjYXBlOmNvbGxlY3Q9ImFsd2F5cyIKICAgICAgIHhsaW5rOmhyZWY9IiNsaW5lYXJHcmFkaWVudDQ0IgogICAgICAgaWQ9ImxpbmVhckdyYWRpZW50NDUiCiAgICAgICB4MT0iNjAuNDQ0OTE2IgogICAgICAgeTE9IjE0OS4zMjg5OSIKICAgICAgIHgyPSIxMDAuMTQyIgogICAgICAgeTI9IjE0OS4zMjg5OSIKICAgICAgIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiAvPjxsaW5lYXJHcmFkaWVudAogICAgICAgaW5rc2NhcGU6Y29sbGVjdD0iYWx3YXlzIgogICAgICAgeGxpbms6aHJlZj0iI2xpbmVhckdyYWRpZW50NDYiCiAgICAgICBpZD0ibGluZWFyR3JhZGllbnQ0NyIKICAgICAgIHgxPSI5NS43ODUwMDQiCiAgICAgICB5MT0iMTUwLjE5IgogICAgICAgeDI9IjE1OC4zMzA5OSIKICAgICAgIHkyPSIxNTAuMTkiCiAgICAgICBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgLz48bGluZWFyR3JhZGllbnQKICAgICAgIGlua3NjYXBlOmNvbGxlY3Q9ImFsd2F5cyIKICAgICAgIHhsaW5rOmhyZWY9IiNsaW5lYXJHcmFkaWVudDQ4IgogICAgICAgaWQ9ImxpbmVhckdyYWRpZW50NDkiCiAgICAgICB4MT0iMTA0LjQyMiIKICAgICAgIHkxPSIxNTEuMjciCiAgICAgICB4Mj0iMTQ4Ljk3NTAxIgogICAgICAgeTI9IjE1MS4yNyIKICAgICAgIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiAvPjxsaW5lYXJHcmFkaWVudAogICAgICAgaW5rc2NhcGU6Y29sbGVjdD0iYWx3YXlzIgogICAgICAgeGxpbms6aHJlZj0iI2xpbmVhckdyYWRpZW50NTAiCiAgICAgICBpZD0ibGluZWFyR3JhZGllbnQ1MSIKICAgICAgIHgxPSIxNTQuMDcwMDEiCiAgICAgICB5MT0iMTUwLjY3MTAxIgogICAgICAgeDI9IjE5My43MTM3NSIKICAgICAgIHkyPSIxNTAuNjcxMDEiCiAgICAgICBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgLz48L2RlZnM+PGcKICAgICB0cmFuc2Zvcm09Im1hdHJpeCgwLjAzNzE1OTgxLDAsMCwwLjAzNzE1OTgxLC0yOS41NjQ3NzEsLTUuNDMyMjAxMikiCiAgICAgaWQ9Imc5IgogICAgIGlua3NjYXBlOmV4cG9ydC1maWxlbmFtZT0ibmluZ3FpVmFyaWFibGUucG5nIgogICAgIGlua3NjYXBlOmV4cG9ydC14ZHBpPSI5NiIKICAgICBpbmtzY2FwZTpleHBvcnQteWRwaT0iOTYiPjxnCiAgICAgICBzdHJva2U9Im5vbmUiCiAgICAgICBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiCiAgICAgICBpZD0iZzgiPjxwYXRoCiAgICAgICAgIGQ9Im0gMTIwMy44Njg2LDM1MC4zMDIyOSBjIDAsMTM2LjA3MzM0IC02OC4wNDMxLDIwNC4xMTcwMSAtMjA0LjEyOTEsMjA0LjExNzAxIC0xMzYuMDg2MDQsMCAtMjA0LjEyOTA1LC02OC4wNTUwMiAtMjA0LjEyOTA1LC0yMDQuMTE3MDEgMCwtMTM2LjA2MiA2OC4wNDMwMSwtMjA0LjExNzAyIDIwNC4xMjkwNSwtMjA0LjExNzAyIDEzNi4wNzQsMCAyMDQuMTI5MSw2OC4wNDMwMSAyMDQuMTI5MSwyMDQuMTE3MDIgeiIKICAgICAgICAgZmlsbC1vcGFjaXR5PSIwLjg1MDk4IgogICAgICAgICBmaWxsPSIjZmZmZmZmIgogICAgICAgICBmaWxsLXJ1bGU9Im5vbnplcm8iCiAgICAgICAgIHN0cm9rZS13aWR0aD0iMS4xMjQ2MiIKICAgICAgICAgaWQ9InBhdGg1LTciCiAgICAgICAgIHNvZGlwb2RpOm5vZGV0eXBlcz0ic3Nzc3MiCiAgICAgICAgIHN0eWxlPSJmaWxsOiMwMDAwMDA7ZmlsbC1vcGFjaXR5OjAuMTQ5MDI7c3Ryb2tlOm5vbmU7c3Ryb2tlLW9wYWNpdHk6MSIgLz48ZwogICAgICAgICBmaWxsLW9wYWNpdHk9IjAuMzgwMzkiCiAgICAgICAgIGZpbGw9IiM3NWM4ZmYiCiAgICAgICAgIGZpbGwtcnVsZT0iZXZlbm9kZCIKICAgICAgICAgc3Ryb2tlLXdpZHRoPSIxIgogICAgICAgICBpZD0iZzQiIC8+PHBhdGgKICAgICAgICAgZD0ibSAxMTgxLjUwOSwzNTAgYyAwLDEyMC45OTQ3MyAtNjAuNTAzLDE4MS40OTgzMiAtMTgxLjUwOSwxODEuNDk4MzIgLTEyMS4wMDYsMCAtMTgxLjUwOSwtNjAuNTEzNjggLTE4MS41MDksLTE4MS40OTgzMiAwLC0xMjAuOTg0NjUgNjAuNTAzLC0xODEuNDk4MzIgMTgxLjUwOSwtMTgxLjQ5ODMyIDEyMC45OTUzLDAgMTgxLjUwOSw2MC41MDMgMTgxLjUwOSwxODEuNDk4MzIgeiIKICAgICAgICAgZmlsbC1vcGFjaXR5PSIwLjg1MDk4IgogICAgICAgICBmaWxsPSIjZmZmZmZmIgogICAgICAgICBmaWxsLXJ1bGU9Im5vbnplcm8iCiAgICAgICAgIHN0cm9rZS13aWR0aD0iMSIKICAgICAgICAgaWQ9InBhdGg1IgogICAgICAgICBzb2RpcG9kaTpub2RldHlwZXM9InNzc3NzIgogICAgICAgICBzdHlsZT0iZmlsbDojZmZmZmZmO2ZpbGwtb3BhY2l0eTowLjg1O3N0cm9rZTpub25lO3N0cm9rZS1vcGFjaXR5OjEiIC8+PGcKICAgICAgICAgZmlsbC1vcGFjaXR5PSIwLjM4MDM5IgogICAgICAgICBmaWxsPSIjNzVjOGZmIgogICAgICAgICBmaWxsLXJ1bGU9ImV2ZW5vZGQiCiAgICAgICAgIHN0cm9rZS13aWR0aD0iMSIKICAgICAgICAgaWQ9Imc3IiAvPjwvZz48L2c+PGcKICAgICBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiCiAgICAgZGF0YS1wYXBlci1kYXRhPSJ7JnF1b3Q7aXNQYWludGluZ0xheWVyJnF1b3Q7OnRydWV9IgogICAgIGlkPSJnOTciCiAgICAgdHJhbnNmb3JtPSJtYXRyaXgoMC4wNjY4ODIwMywwLDAsMC4wNjY4ODIwMywtMjIuNjQ0ODExLC0yLjkzMjA4MTIpIj48ZwogICAgICAgZmlsbD0iI2ZmZmZmZiIKICAgICAgIGZpbGwtb3BhY2l0eT0iMC4yIgogICAgICAgc3Ryb2tlLXdpZHRoPSIwIgogICAgICAgaWQ9ImcxNiIgLz48ZwogICAgICAgZmlsbD0iI2ZmZmZmZiIKICAgICAgIGZpbGwtb3BhY2l0eT0iMC4yIgogICAgICAgc3Ryb2tlLXdpZHRoPSIwIgogICAgICAgaWQ9ImcyOSIgLz48ZwogICAgICAgZmlsbD0iI2ZmZmZmZiIKICAgICAgIGZpbGwtb3BhY2l0eT0iMC4yIgogICAgICAgc3Ryb2tlLXdpZHRoPSIwIgogICAgICAgaWQ9Imc0MSIgLz48ZwogICAgICAgZmlsbD0iI2ZmZmZmZiIKICAgICAgIGZpbGwtb3BhY2l0eT0iMC4yIgogICAgICAgc3Ryb2tlLXdpZHRoPSIwIgogICAgICAgaWQ9Imc1NSIgLz48ZwogICAgICAgZmlsbD0iI2ZmZmZmZiIKICAgICAgIGZpbGwtb3BhY2l0eT0iMC4yIgogICAgICAgc3Ryb2tlLXdpZHRoPSIwIgogICAgICAgaWQ9Imc2OCIgLz48ZwogICAgICAgZmlsbD0iI2ZmZmZmZiIKICAgICAgIGZpbGwtb3BhY2l0eT0iMC4yIgogICAgICAgc3Ryb2tlLXdpZHRoPSIwIgogICAgICAgaWQ9Imc4MyIgLz48ZwogICAgICAgZmlsbD0ibm9uZSIKICAgICAgIHN0cm9rZT0iI2ZmZmZmZiIKICAgICAgIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIKICAgICAgIHN0cm9rZS13aWR0aD0iMjAiCiAgICAgICBpZD0iZzkxIiAvPjxnCiAgICAgICBmaWxsPSJub25lIgogICAgICAgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIgogICAgICAgaWQ9Imc5NCIgLz48ZwogICAgICAgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIgogICAgICAgZGF0YS1wYXBlci1kYXRhPSJ7JnF1b3Q7aXNQYWludGluZ0xheWVyJnF1b3Q7OnRydWV9IgogICAgICAgaWQ9Imc5Ny0wIgogICAgICAgdHJhbnNmb3JtPSJtYXRyaXgoMC43OTAwMDI2NywwLDAsMC43OTAwMDI2NywzNTEuNjAwMTUsMzkuNjUxODQ5KSIKICAgICAgIHN0eWxlPSJkaXNwbGF5OmlubGluZSI+PGcKICAgICAgICAgZmlsbD0iI2ZmZmZmZiIKICAgICAgICAgZmlsbC1vcGFjaXR5PSIwLjIiCiAgICAgICAgIHN0cm9rZS13aWR0aD0iMCIKICAgICAgICAgaWQ9ImcxNi05IiAvPjxnCiAgICAgICAgIGZpbGw9IiNmZmZmZmYiCiAgICAgICAgIGZpbGwtb3BhY2l0eT0iMC4yIgogICAgICAgICBzdHJva2Utd2lkdGg9IjAiCiAgICAgICAgIGlkPSJnMjktNCIgLz48ZwogICAgICAgICBmaWxsPSIjZmZmZmZmIgogICAgICAgICBmaWxsLW9wYWNpdHk9IjAuMiIKICAgICAgICAgc3Ryb2tlLXdpZHRoPSIwIgogICAgICAgICBpZD0iZzQxLTgiIC8+PGcKICAgICAgICAgZmlsbD0iI2ZmZmZmZiIKICAgICAgICAgZmlsbC1vcGFjaXR5PSIwLjIiCiAgICAgICAgIHN0cm9rZS13aWR0aD0iMCIKICAgICAgICAgaWQ9Imc1NS04IiAvPjxnCiAgICAgICAgIGZpbGw9IiNmZmZmZmYiCiAgICAgICAgIGZpbGwtb3BhY2l0eT0iMC4yIgogICAgICAgICBzdHJva2Utd2lkdGg9IjAiCiAgICAgICAgIGlkPSJnNjgtMiIgLz48ZwogICAgICAgICBmaWxsPSIjZmZmZmZmIgogICAgICAgICBmaWxsLW9wYWNpdHk9IjAuMiIKICAgICAgICAgc3Ryb2tlLXdpZHRoPSIwIgogICAgICAgICBpZD0iZzgzLTQiIC8+PHBhdGgKICAgICAgICAgZmlsbD0ibm9uZSIKICAgICAgICAgc3Ryb2tlPSIjZmZmZmZmIgogICAgICAgICBzdHJva2UtbGluZWNhcD0icm91bmQiCiAgICAgICAgIHN0cm9rZS13aWR0aD0iMjAiCiAgICAgICAgIGQ9Im0gODcuMzAyLDE5Ny41OSBjIDAsMCAtMTguNDE5LC0xNi4xNzYgLTE2Ljc1MiwtNDkuNTkyIDEuMzksLTI3Ljg1OSAxOS41OTIsLTQ2LjkzIDE5LjU5MiwtNDYuOTMiCiAgICAgICAgIGlkPSJwYXRoODgiCiAgICAgICAgIHNvZGlwb2RpOm5vZGV0eXBlcz0iY2NjIgogICAgICAgICBzdHlsZT0iZmlsbDpub25lO2ZpbGwtb3BhY2l0eTowLjk0OTAyO3N0cm9rZTp1cmwoI2xpbmVhckdyYWRpZW50NDUpO3N0cm9rZS1vcGFjaXR5OjAuOTQ5MDIiIC8+PHBhdGgKICAgICAgICAgZmlsbD0ibm9uZSIKICAgICAgICAgc3Ryb2tlPSIjZmZmZmZmIgogICAgICAgICBzdHJva2UtbGluZWNhcD0icm91bmQiCiAgICAgICAgIHN0cm9rZS13aWR0aD0iMjAiCiAgICAgICAgIGQ9Im0gMTY2LjkxLDEwMi40MSBjIDAsMCAxNy4wNTEsMTkuOTkgMTYuODAxLDQ3Ljg3OSAtMC4zLDMzLjQ1MiAtMTkuNjQxLDQ4LjY0MyAtMTkuNjQxLDQ4LjY0MyIKICAgICAgICAgZGF0YS1wYXBlci1kYXRhPSJ7JnF1b3Q7aW5kZXgmcXVvdDs6bnVsbH0iCiAgICAgICAgIGlkPSJwYXRoODkiCiAgICAgICAgIHN0eWxlPSJmaWxsOm5vbmU7ZmlsbC1vcGFjaXR5OjAuOTQ5MDI7c3Ryb2tlOnVybCgjbGluZWFyR3JhZGllbnQ1MSk7c3Ryb2tlLW9wYWNpdHk6MC45NDkwMiIgLz48ZwogICAgICAgICBmaWxsPSJub25lIgogICAgICAgICBzdHJva2U9IiNmZmZmZmYiCiAgICAgICAgIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIKICAgICAgICAgc3Ryb2tlLXdpZHRoPSIyMCIKICAgICAgICAgaWQ9Imc5MS01Ij48cGF0aAogICAgICAgICAgIGQ9Im0gMTM4Ljk3NSwxNzIuMDcgLTI0LjU1MywtNDEuNiIKICAgICAgICAgICBpZD0icGF0aDkwIgogICAgICAgICAgIHN0eWxlPSJmaWxsOm5vbmU7ZmlsbC1vcGFjaXR5OjAuOTQ5MDI7c3Ryb2tlOnVybCgjbGluZWFyR3JhZGllbnQ0OSk7c3Ryb2tlLW9wYWNpdHk6MC45NDkwMiIgLz48cGF0aAogICAgICAgICAgIGQ9Im0gMTQ4LjMzMSwxMzAuNDcgLTQyLjU0NiwzOS40NCIKICAgICAgICAgICBkYXRhLXBhcGVyLWRhdGE9InsmcXVvdDtpbmRleCZxdW90OzpudWxsfSIKICAgICAgICAgICBpZD0icGF0aDkxIgogICAgICAgICAgIHN0eWxlPSJmaWxsOm5vbmU7ZmlsbC1vcGFjaXR5OjAuOTQ5MDI7c3Ryb2tlOnVybCgjbGluZWFyR3JhZGllbnQ0Nyk7c3Ryb2tlLW9wYWNpdHk6MC45NDkwMiIgLz48L2c+PGcKICAgICAgICAgZmlsbD0ibm9uZSIKICAgICAgICAgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIgogICAgICAgICBpZD0iZzk0LTUiIC8+PGcKICAgICAgICAgZmlsbD0ibm9uZSIKICAgICAgICAgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIgogICAgICAgICBpZD0iZzk2LTEiIC8+PC9nPjxnCiAgICAgICBmaWxsPSJub25lIgogICAgICAgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIgogICAgICAgaWQ9Imc5NiI+PHBhdGgKICAgICAgICAgc3Ryb2tlPSIjMDAwMDAwIgogICAgICAgICBzdHJva2Utb3BhY2l0eT0iMC4xNSIKICAgICAgICAgc3Ryb2tlLXdpZHRoPSI0NSIKICAgICAgICAgZD0ibSA1MDcuMzk2LDIxNC4zMSBoIDQzLjM1OCBtIC0yMS42NzksLTIxLjY3OCB2IDQzLjM1NyIKICAgICAgICAgaWQ9InBhdGg5NSIgLz48cGF0aAogICAgICAgICBzdHJva2U9IiNmZmZmZmYiCiAgICAgICAgIHN0cm9rZS13aWR0aD0iMjUiCiAgICAgICAgIGQ9Im0gNTA3LjM5NiwyMTQuMzEgaCA0My4zNTggbSAtMjEuNjc5LC0yMS42NzggdiA0My4zNTciCiAgICAgICAgIGlkPSJwYXRoOTYiCiAgICAgICAgIHN0eWxlPSJzdHJva2U6I2ZmZmZmZjtzdHJva2Utb3BhY2l0eTowLjk1IiAvPjwvZz48L2c+PC9zdmc+CjwhLS1yb3RhdGlvbkNlbnRlcjo1NTguMjQ2Njg1MDAwMDAwMToyNzguNjcxODgtLT4KCg==';
 
     class ningqiVariableTool {
         constructor() {
@@ -62,53 +166,52 @@
         getInfo() {
             return {
                 id: 'ningqiVariableTool',
-                name: 'ningqiVariableTool',
+                name: Scratch.translate('ningqiVariableTool'),
                 color1: '#0099ff94',
                 color2: '#42A5F5',
                 color3: '#0009ff94',
-                iconURL: VL_ICON,
                 menuIconURI: EXTENSION_ICON,
                 menus: {
                     privacyOptions: [
-                        { text: '全局', value: 'global' },
-                        { text: '私有', value: 'private' }
+                        { text: Scratch.translate('global'), value: 'global' },
+                        { text: Scratch.translate('private'), value: 'private' }
                     ]
                 },
                 blocks: [
                     {opcode: 'NVT',blockType: B.LABEL,text: 'github.com/ningqi24',category: 'Variables'},
-                    { opcode: 'listVariables', blockType: B.REPORTER, text: '列出原版变量', arguments: {}, category: 'Variables' },
-                    { opcode: 'listLists', blockType: B.REPORTER, text: '列出原版列表', arguments: {}, category: 'Lists' },
-                    { opcode: 'listInternalVariables', blockType: B.REPORTER, text: '列出扩展内部变量', arguments: {}, category: 'Variables' },
-                    { opcode: 'listInternalLists', blockType: B.REPORTER, text: '列出扩展内部列表', arguments: {}, category: 'Lists' },
+                    { opcode: 'listVariables', blockType: B.REPORTER, text: Scratch.translate('listVariables'), arguments: {}, category: 'Variables' },
+                    { opcode: 'listLists', blockType: B.REPORTER, text: Scratch.translate('listLists'), arguments: {}, category: 'Lists' },
+                    { opcode: 'listInternalVariables', blockType: B.REPORTER, text: Scratch.translate('listInternalVariables'), arguments: {}, category: 'Variables' },
+                    { opcode: 'listInternalLists', blockType: B.REPORTER, text: Scratch.translate('listInternalLists'), arguments: {}, category: 'Lists' },
                     '---',
-                    { opcode: 'createVariable', blockType: B.COMMAND, text: '创建变量 [NAME]', arguments: { NAME: { type: A.STRING, defaultValue: '' } }, category: 'Variables' },
-                    { opcode: 'createList', blockType: B.COMMAND, text: '创建列表 [NAME]', arguments: { NAME: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
+                    { opcode: 'createVariable', blockType: B.COMMAND, text: Scratch.translate('createVariable'), arguments: { NAME: { type: A.STRING, defaultValue: '' } }, category: 'Variables' },
+                    { opcode: 'createList', blockType: B.COMMAND, text: Scratch.translate('createList'), arguments: { NAME: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
                     '---',
-                    { opcode: 'setVariable', blockType: B.COMMAND, text: '将 [VARIABLE] 设为 [VALUE]', arguments: { VARIABLE: { type: A.STRING, defaultValue: '' }, VALUE: { type: A.NUMBER, defaultValue: 0 } }, category: 'Variables' },
-                    { opcode: 'changeVariable', blockType: B.COMMAND, text: '将 [VARIABLE] 增加 [VALUE]', arguments: { VARIABLE: { type: A.STRING, defaultValue: '' }, VALUE: { type: A.NUMBER, defaultValue: 1 } }, category: 'Variables' },
-                    { opcode: 'getVariable', blockType: B.REPORTER, text: '[VARIABLE] 的值', arguments: { VARIABLE: { type: A.STRING, defaultValue: '' } }, category: 'Variables' },
-                    { opcode: 'deleteVariable', blockType: B.COMMAND, text: '删除变量 [NAME]', arguments: { NAME: { type: A.STRING, defaultValue: '' } }, category: 'Variables' },
-                    { opcode: 'isVariableExists', blockType: B.BOOLEAN, text: '变量 [NAME] 存在', arguments: { NAME: { type: A.STRING, defaultValue: '' } }, category: 'Variables' },
+                    { opcode: 'setVariable', blockType: B.COMMAND, text: Scratch.translate('setVariable'), arguments: { VARIABLE: { type: A.STRING, defaultValue: '' }, VALUE: { type: A.NUMBER, defaultValue: 0 } }, category: 'Variables' },
+                    { opcode: 'changeVariable', blockType: B.COMMAND, text: Scratch.translate('changeVariable'), arguments: { VARIABLE: { type: A.STRING, defaultValue: '' }, VALUE: { type: A.NUMBER, defaultValue: 1 } }, category: 'Variables' },
+                    { opcode: 'getVariable', blockType: B.REPORTER, text: Scratch.translate('getVariable'), arguments: { VARIABLE: { type: A.STRING, defaultValue: '' } }, category: 'Variables' },
+                    { opcode: 'deleteVariable', blockType: B.COMMAND, text: Scratch.translate('deleteVariable'), arguments: { NAME: { type: A.STRING, defaultValue: '' } }, category: 'Variables' },
+                    { opcode: 'isVariableExists', blockType: B.BOOLEAN, text: Scratch.translate('isVariableExists'), arguments: { NAME: { type: A.STRING, defaultValue: '' } }, category: 'Variables' },
                     '---',
-                    { opcode: 'appendToList', blockType: B.COMMAND, text: '将 [ITEM] 加入 [LIST]', arguments: { ITEM: { type: A.STRING, defaultValue: '' }, LIST: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
-                    { opcode: 'deleteListItem', blockType: B.COMMAND, text: '删除 [LIST] 的第 [INDEX] 项', arguments: { LIST: { type: A.STRING, defaultValue: '' }, INDEX: { type: A.NUMBER, defaultValue: 1 } }, category: 'Lists' },
-                    { opcode: 'deleteAllListItems', blockType: B.COMMAND, text: '删除 [LIST] 的全部项目', arguments: { LIST: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
-                    { opcode: 'insertListItem', blockType: B.COMMAND, text: '在 [LIST] 的第 [INDEX] 项前插入 [ITEM]', arguments: { LIST: { type: A.STRING, defaultValue: '' }, INDEX: { type: A.NUMBER, defaultValue: 1 }, ITEM: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
-                    { opcode: 'replaceListItem', blockType: B.COMMAND, text: '将 [LIST] 的第 [INDEX] 项替换为 [ITEM]', arguments: { LIST: { type: A.STRING, defaultValue: '' }, INDEX: { type: A.NUMBER, defaultValue: 1 }, ITEM: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
-                    { opcode: 'getListItem', blockType: B.REPORTER, text: '[LIST] 的第 [INDEX] 项', arguments: { LIST: { type: A.STRING, defaultValue: '' }, INDEX: { type: A.NUMBER, defaultValue: 1 } }, category: 'Lists' },
-                    { opcode: 'indexOfListItem', blockType: B.REPORTER, text: '[LIST] 中第一个 [ITEM] 的编号', arguments: { LIST: { type: A.STRING, defaultValue: '' }, ITEM: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
-                    { opcode: 'listLength', blockType: B.REPORTER, text: '[LIST] 的项目数', arguments: { LIST: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
-                    { opcode: 'listContains', blockType: B.BOOLEAN, text: '[LIST] 包含 [ITEM]', arguments: { LIST: { type: A.STRING, defaultValue: '' }, ITEM: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
-                    { opcode: 'copyList', blockType: B.COMMAND, text: '复制列表 [SOURCE_LIST] 的数据到列表 [TARGET_LIST]', arguments: { SOURCE_LIST: { type: A.STRING, defaultValue: '' }, TARGET_LIST: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
-                    { opcode: 'getList', blockType: B.REPORTER, text: '列表 [LIST] 的值', arguments: { LIST: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
-                    { opcode: 'deleteList', blockType: B.COMMAND, text: '删除列表 [NAME]', arguments: { NAME: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
-                    { opcode: 'isListExists', blockType: B.BOOLEAN, text: '列表 [NAME] 存在', arguments: { NAME: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
+                    { opcode: 'appendToList', blockType: B.COMMAND, text: Scratch.translate('appendToList'), arguments: { ITEM: { type: A.STRING, defaultValue: '' }, LIST: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
+                    { opcode: 'deleteListItem', blockType: B.COMMAND, text: Scratch.translate('deleteListItem'), arguments: { LIST: { type: A.STRING, defaultValue: '' }, INDEX: { type: A.NUMBER, defaultValue: 1 } }, category: 'Lists' },
+                    { opcode: 'deleteAllListItems', blockType: B.COMMAND, text: Scratch.translate('deleteAllListItems'), arguments: { LIST: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
+                    { opcode: 'insertListItem', blockType: B.COMMAND, text: Scratch.translate('insertListItem'), arguments: { LIST: { type: A.STRING, defaultValue: '' }, INDEX: { type: A.NUMBER, defaultValue: 1 }, ITEM: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
+                    { opcode: 'replaceListItem', blockType: B.COMMAND, text: Scratch.translate('replaceListItem'), arguments: { LIST: { type: A.STRING, defaultValue: '' }, INDEX: { type: A.NUMBER, defaultValue: 1 }, ITEM: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
+                    { opcode: 'getListItem', blockType: B.REPORTER, text: Scratch.translate('getListItem'), arguments: { LIST: { type: A.STRING, defaultValue: '' }, INDEX: { type: A.NUMBER, defaultValue: 1 } }, category: 'Lists' },
+                    { opcode: 'indexOfListItem', blockType: B.REPORTER, text: Scratch.translate('indexOfListItem'), arguments: { LIST: { type: A.STRING, defaultValue: '' }, ITEM: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
+                    { opcode: 'listLength', blockType: B.REPORTER, text: Scratch.translate('listLength'), arguments: { LIST: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
+                    { opcode: 'listContains', blockType: B.BOOLEAN, text: Scratch.translate('listContains'), arguments: { LIST: { type: A.STRING, defaultValue: '' }, ITEM: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
+                    { opcode: 'copyList', blockType: B.COMMAND, text: Scratch.translate('copyList'), arguments: { SOURCE_LIST: { type: A.STRING, defaultValue: '' }, TARGET_LIST: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
+                    { opcode: 'getList', blockType: B.REPORTER, text: Scratch.translate('getList'), arguments: { LIST: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
+                    { opcode: 'deleteList', blockType: B.COMMAND, text: Scratch.translate('deleteList'), arguments: { NAME: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
+                    { opcode: 'isListExists', blockType: B.BOOLEAN, text: Scratch.translate('isListExists'), arguments: { NAME: { type: A.STRING, defaultValue: '' } }, category: 'Lists' },
                     '---',
-                    { opcode: 'setVariablePrivacy', blockType: B.COMMAND, text: '设置变量 [NAME] 为 [PRIVACY]', arguments: { NAME: { type: A.STRING, defaultValue: '' }, PRIVACY: { type: A.STRING, menu: 'privacyOptions', defaultValue: '全局' } }, category: 'Variables' },
-                    { opcode: 'setListPrivacy', blockType: B.COMMAND, text: '设置列表 [NAME] 为 [PRIVACY]', arguments: { NAME: { type: A.STRING, defaultValue: '' }, PRIVACY: { type: A.STRING, menu: 'privacyOptions', defaultValue: '全局' } }, category: 'Lists' },
-                    { opcode: 'addRoleAccess', blockType: B.COMMAND, text: '允许角色 [ROLE] 访问 [NAME]', arguments: { ROLE: { type: A.STRING, defaultValue: '' }, NAME: { type: A.STRING, defaultValue: '' } }, category: 'Variables' },
-                    { opcode: 'removeRoleAccess', blockType: B.COMMAND, text: '禁止角色 [ROLE] 访问 [NAME]', arguments: { ROLE: { type: A.STRING, defaultValue: '' }, NAME: { type: A.STRING, defaultValue: '' } }, category: 'Variables' },
-                    { opcode: 'hasRoleAccess', blockType: B.BOOLEAN, text: '角色 [ROLE] 可访问 [NAME]', arguments: { ROLE: { type: A.STRING, defaultValue: '' }, NAME: { type: A.STRING, defaultValue: '' } }, category: 'Variables' }
+                    { opcode: 'setVariablePrivacy', blockType: B.COMMAND, text: Scratch.translate('setVariablePrivacy'), arguments: { NAME: { type: A.STRING, defaultValue: '' }, PRIVACY: { type: A.STRING, menu: 'privacyOptions', defaultValue: Scratch.translate('global') } }, category: 'Variables' },
+                    { opcode: 'setListPrivacy', blockType: B.COMMAND, text: Scratch.translate('setListPrivacy'), arguments: { NAME: { type: A.STRING, defaultValue: '' }, PRIVACY: { type: A.STRING, menu: 'privacyOptions', defaultValue: Scratch.translate('global') } }, category: 'Lists' },
+                    { opcode: 'addRoleAccess', blockType: B.COMMAND, text: Scratch.translate('addRoleAccess'), arguments: { ROLE: { type: A.STRING, defaultValue: '' }, NAME: { type: A.STRING, defaultValue: '' } }, category: 'Variables' },
+                    { opcode: 'removeRoleAccess', blockType: B.COMMAND, text: Scratch.translate('removeRoleAccess'), arguments: { ROLE: { type: A.STRING, defaultValue: '' }, NAME: { type: A.STRING, defaultValue: '' } }, category: 'Variables' },
+                    { opcode: 'hasRoleAccess', blockType: B.BOOLEAN, text: Scratch.translate('hasRoleAccess'), arguments: { ROLE: { type: A.STRING, defaultValue: '' }, NAME: { type: A.STRING, defaultValue: '' } }, category: 'Variables' }
                 ]
             };
         }
